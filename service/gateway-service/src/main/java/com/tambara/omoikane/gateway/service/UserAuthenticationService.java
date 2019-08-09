@@ -1,17 +1,23 @@
 package com.tambara.omoikane.gateway.service;
 
 import com.tambara.omoikane.gateway.exception.HttpErrorException;
-import com.tambara.omoikane.gateway.mapper.dto.UserDto;
+import com.tambara.omoikane.gateway.model.Privilege;
+import com.tambara.omoikane.gateway.model.Role;
 import com.tambara.omoikane.gateway.model.User;
 import com.tambara.omoikane.gateway.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class UserAuthenticationService implements UserAuthenticationBaseService {
@@ -35,9 +41,41 @@ public class UserAuthenticationService implements UserAuthenticationBaseService 
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(s);
 
-        return new UserDto(user.getUsername(), user.getPassword(),
-                user.isAccountNonExpired(), user.isAccountNonLocked(),
-                user.isCredentialsNonExpired(), user.isEnabled());
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                user.isEnabled(),
+                user.isAccountNonExpired(),
+                user.isCredentialsNonExpired(),
+                user.isAccountNonLocked(),
+                getAuthorities(user.getRoles())
+        );
+
+    }
+
+    private Collection<? extends GrantedAuthority> getAuthorities(final Collection<Role> roles) {
+        return getGrantedAuthorities(getPrivileges(roles));
+    }
+
+    private List<String> getPrivileges(Collection<Role> roles) {
+
+        List<String> privileges = new ArrayList<>();
+        List<Privilege> collection = new ArrayList<>();
+        for (Role role : roles) {
+            collection.addAll(role.getPrivileges());
+        }
+        for (Privilege item : collection) {
+            privileges.add(item.getName());
+        }
+        return privileges;
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (String privilege : privileges) {
+            authorities.add(new SimpleGrantedAuthority(privilege));
+        }
+        return authorities;
     }
 
     @Override

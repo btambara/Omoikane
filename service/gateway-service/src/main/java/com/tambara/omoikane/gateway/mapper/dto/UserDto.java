@@ -1,13 +1,10 @@
 package com.tambara.omoikane.gateway.mapper.dto;
 
-import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.tambara.omoikane.gateway.model.Role;
 
 import java.util.Collection;
 
-@Data
-public class UserDto implements UserDetails {
+public class UserDto {
 
     private long id;
 
@@ -23,37 +20,8 @@ public class UserDto implements UserDetails {
 
     private boolean enabled;
 
-    public UserDto() {
-        this.accountNonExpired = true;
-        this.accountNonLocked = true;
-        this.credentialsNonExpired = true;
-        this.enabled = true;
-    }
+    private Collection<Role> roles;
 
-    public UserDto(String username, String password) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-    }
-
-    public UserDto(String username, String password,
-                   boolean accountNonExpired, boolean accountNonLocked,
-                   boolean credentialsNonExpired, boolean enabled) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.accountNonExpired = accountNonExpired;
-        this.accountNonLocked = accountNonLocked;
-        this.credentialsNonExpired = credentialsNonExpired;
-        this.enabled = enabled;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
     public boolean isAccountNonExpired() {
         return accountNonExpired;
     }
@@ -62,7 +30,6 @@ public class UserDto implements UserDetails {
         this.accountNonExpired = accountNonExpired;
     }
 
-    @Override
     public boolean isAccountNonLocked() {
         return accountNonLocked;
     }
@@ -71,7 +38,6 @@ public class UserDto implements UserDetails {
         this.accountNonLocked = accountNonLocked;
     }
 
-    @Override
     public boolean isCredentialsNonExpired() {
         return credentialsNonExpired;
     }
@@ -80,7 +46,6 @@ public class UserDto implements UserDetails {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
-    @Override
     public boolean isEnabled() {
         return enabled;
     }
@@ -111,5 +76,13 @@ public class UserDto implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 }

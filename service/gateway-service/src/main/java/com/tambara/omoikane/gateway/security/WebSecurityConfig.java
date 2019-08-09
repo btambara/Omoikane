@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserAuthenticationBaseService userAuthenticationService;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userAuthenticationService);
         authenticationProvider.setPasswordEncoder(passwordEncoder);
@@ -45,13 +45,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**/logout/**").permitAll()
                 .antMatchers("/**/register/**").permitAll();
 
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/").hasAuthority("EUREKA_ACCESS");
+        http.authorizeRequests().antMatchers("/h2-console/**").hasAuthority("H2_CONSOLE_ACCESS");
 
         http.httpBasic();
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");

@@ -1,16 +1,13 @@
 package com.tambara.omoikane.gateway.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
-@Data
 public class User {
     //Purpose: Unique ID
     //Data Type: long
     @Id
-    @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
@@ -27,6 +24,10 @@ public class User {
     private boolean credentialsNonExpired;
 
     private boolean enabled;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
 
     public long getId() {
         return id;
@@ -82,5 +83,13 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 }
