@@ -1,10 +1,10 @@
 package com.tambara.omoikane.gateway.service;
 
-import com.tambara.omoikane.gateway.exception.HttpErrorException;
-import com.tambara.omoikane.gateway.model.Privilege;
-import com.tambara.omoikane.gateway.model.Role;
-import com.tambara.omoikane.gateway.model.User;
-import com.tambara.omoikane.gateway.repository.UserRepository;
+import com.tambara.omoikane.gateway.persistence.dao.UserRepository;
+import com.tambara.omoikane.gateway.persistence.model.Privilege;
+import com.tambara.omoikane.gateway.persistence.model.Role;
+import com.tambara.omoikane.gateway.persistence.model.User;
+import com.tambara.omoikane.gateway.web.exception.HttpErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,4 +1,4 @@
-package com.tambara.omoikane.gateway.model;
+package com.tambara.omoikane.gateway.persistence.model;
 
 import javax.persistence.*;
 import java.util.Collection;

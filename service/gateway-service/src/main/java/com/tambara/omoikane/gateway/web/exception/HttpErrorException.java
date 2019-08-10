@@ -1,4 +1,4 @@
-package com.tambara.omoikane.gateway.exception;
+package com.tambara.omoikane.gateway.web.exception;
 
 import org.springframework.http.HttpStatus;
 

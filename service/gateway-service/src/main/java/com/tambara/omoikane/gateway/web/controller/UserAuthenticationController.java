@@ -1,10 +1,10 @@
-package com.tambara.omoikane.gateway.controller;
+package com.tambara.omoikane.gateway.web.controller;
 
 import com.tambara.omoikane.gateway.mapper.UserMapper;
-import com.tambara.omoikane.gateway.mapper.dto.UserDto;
-import com.tambara.omoikane.gateway.model.User;
+import com.tambara.omoikane.gateway.persistence.model.User;
 import com.tambara.omoikane.gateway.security.LoginRequest;
 import com.tambara.omoikane.gateway.service.UserAuthenticationBaseService;
+import com.tambara.omoikane.gateway.web.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;

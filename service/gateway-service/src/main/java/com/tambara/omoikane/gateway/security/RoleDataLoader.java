@@ -1,10 +1,10 @@
 package com.tambara.omoikane.gateway.security;
 
-import com.tambara.omoikane.gateway.model.Privilege;
-import com.tambara.omoikane.gateway.model.Role;
-import com.tambara.omoikane.gateway.model.User;
-import com.tambara.omoikane.gateway.repository.PrivilegeRepository;
-import com.tambara.omoikane.gateway.repository.RoleRepository;
+import com.tambara.omoikane.gateway.persistence.dao.PrivilegeRepository;
+import com.tambara.omoikane.gateway.persistence.dao.RoleRepository;
+import com.tambara.omoikane.gateway.persistence.model.Privilege;
+import com.tambara.omoikane.gateway.persistence.model.Role;
+import com.tambara.omoikane.gateway.persistence.model.User;
 import com.tambara.omoikane.gateway.service.UserAuthenticationBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

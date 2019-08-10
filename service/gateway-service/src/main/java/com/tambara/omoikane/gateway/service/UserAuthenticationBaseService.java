@@ -1,6 +1,6 @@
 package com.tambara.omoikane.gateway.service;
 
-import com.tambara.omoikane.gateway.model.User;
+import com.tambara.omoikane.gateway.persistence.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 

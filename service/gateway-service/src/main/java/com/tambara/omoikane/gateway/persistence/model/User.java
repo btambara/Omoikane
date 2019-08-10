@@ -1,15 +1,20 @@
-package com.tambara.omoikane.gateway.mapper.dto;
+package com.tambara.omoikane.gateway.persistence.model;
 
-import com.tambara.omoikane.gateway.model.Role;
-
+import javax.persistence.*;
 import java.util.Collection;
 
-public class UserDto {
-
+@Entity
+public class User {
+    //Purpose: Unique ID
+    //Data Type: long
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
     private boolean accountNonExpired;
@@ -20,7 +25,33 @@ public class UserDto {
 
     private boolean enabled;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public boolean isAccountNonExpired() {
         return accountNonExpired;
@@ -52,30 +83,6 @@ public class UserDto {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Collection<Role> getRoles() {
