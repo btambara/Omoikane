@@ -1,4 +1,4 @@
-package com.tambara.omoikane.gateway.security;
+package com.tambara.omoikane.gateway.web.dto;
 
 public class LoginRequest {
     private String username;
