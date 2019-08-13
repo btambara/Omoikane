@@ -1,4 +1,4 @@
-package com.tambara.omoikane.gateway.security;
+package com.tambara.omoikane.gateway.persistence;
 
 import com.tambara.omoikane.gateway.persistence.dao.PrivilegeRepository;
 import com.tambara.omoikane.gateway.persistence.dao.RoleRepository;
