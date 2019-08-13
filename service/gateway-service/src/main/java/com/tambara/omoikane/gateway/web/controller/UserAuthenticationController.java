@@ -3,6 +3,7 @@ package com.tambara.omoikane.gateway.web.controller;
 import com.tambara.omoikane.gateway.mapper.UserMapper;
 import com.tambara.omoikane.gateway.persistence.model.User;
 import com.tambara.omoikane.gateway.security.LoginRequest;
+import com.tambara.omoikane.gateway.service.EmailBaseService;
 import com.tambara.omoikane.gateway.service.UserAuthenticationBaseService;
 import com.tambara.omoikane.gateway.web.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class UserAuthenticationController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private EmailBaseService emailService;
+
     @Bean
     public UserMapper createUserMapper() {
         return new UserMapper();
@@ -34,6 +38,8 @@ public class UserAuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+        emailService.sendEmail("btambara@gmail.com", "Crap", "Crap");
+
         userAuthenticationService.login(loginRequest.getUsername(), loginRequest.getPassword());
         return new ResponseEntity<>("Logged in user " + loginRequest.getUsername(), HttpStatus.ACCEPTED);
     }

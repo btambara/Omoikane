@@ -55,8 +55,8 @@ public class RoleDataLoader implements ApplicationListener<ContextRefreshedEvent
         final Role userRole = createRoleIfNotFound("ROLE_USER", userPrivileges);
 
         // == create initial user
-        createUserIfNotFound("admin", "A1vj%40hsU%k", new ArrayList<>(Collections.singletonList(adminRole)));
-        createUserIfNotFound("user", "password", new ArrayList<>(Collections.singletonList(userRole)));
+        createUserIfNotFound("admin", "admin@test.com", "A1vj%40hsU%k", new ArrayList<>(Collections.singletonList(adminRole)));
+        createUserIfNotFound("user", "user@test.com", "password", new ArrayList<>(Collections.singletonList(userRole)));
         alreadySetup = true;
     }
 
@@ -82,10 +82,12 @@ public class RoleDataLoader implements ApplicationListener<ContextRefreshedEvent
     }
 
     @Transactional
-    private User createUserIfNotFound(final String username, final String password, final Collection<Role> roles) {
+    private User createUserIfNotFound(final String username, final String email,
+                                      final String password, final Collection<Role> roles) {
         User user = new User();
         user.setId(-1L);
         user.setUsername(username);
+        user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);

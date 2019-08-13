@@ -34,6 +34,7 @@ public class UserAuthenticationService implements UserAuthenticationBaseService 
         if (foundUser == null) {
             return userRepository.save(user);
         }
+
         throw new HttpErrorException("Username already exist", HttpStatus.CONFLICT);
     }
 
