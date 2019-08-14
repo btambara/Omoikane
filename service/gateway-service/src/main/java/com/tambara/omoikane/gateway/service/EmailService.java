@@ -27,7 +27,7 @@ public class EmailService implements EmailBaseService {
             MimeMessageHelper helper = new MimeMessageHelper(message, pathToAttachment != null, "utf-8");
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setText(text);
+            helper.setText(text, true);
 
             if (pathToAttachment != null) {
                 FileSystemResource file = new FileSystemResource(new File(pathToAttachment));

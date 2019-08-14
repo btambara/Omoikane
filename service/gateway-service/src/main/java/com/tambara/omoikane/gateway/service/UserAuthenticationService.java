@@ -91,6 +91,27 @@ public class UserAuthenticationService implements UserAuthenticationBaseService 
     }
 
     @Override
+    public void updateEnabledAccount(String username, boolean isEnabled) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            user.setEnabled(isEnabled);
+            userRepository.save(user);
+        } else {
+            throw new HttpErrorException("Username does not exist", HttpStatus.CONFLICT);
+        }
+    }
+
+    @Override
+    public User getUser(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            return user;
+        } else {
+            throw new HttpErrorException("Username does not exist", HttpStatus.CONFLICT);
+        }
+    }
+
+    @Override
     public boolean logout(String token) {
         return false;
     }

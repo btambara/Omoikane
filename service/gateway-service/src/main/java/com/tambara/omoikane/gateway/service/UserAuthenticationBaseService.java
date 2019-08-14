@@ -10,6 +10,10 @@ public interface UserAuthenticationBaseService extends UserDetailsService {
 
     String login(String username, String password);
 
+    void updateEnabledAccount(String username, boolean isEnabled);
+
+    User getUser(String username);
+
     boolean logout(String token);
 
     boolean isValidToken(String token);
