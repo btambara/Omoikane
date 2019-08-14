@@ -1,6 +1,6 @@
 package com.tambara.resume.service.resume;
 
-import com.tambara.resume.model.resume.Project;
+import com.tambara.resume.persistence.model.resume.Project;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

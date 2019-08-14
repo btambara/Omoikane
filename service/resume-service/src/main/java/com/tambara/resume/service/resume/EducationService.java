@@ -1,7 +1,7 @@
 package com.tambara.resume.service.resume;
 
-import com.tambara.resume.model.resume.Education;
-import com.tambara.resume.repository.resume.EducationRepo;
+import com.tambara.resume.persistence.dao.resume.EducationRepo;
+import com.tambara.resume.persistence.model.resume.Education;
 import com.tambara.resume.service.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

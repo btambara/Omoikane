@@ -1,7 +1,7 @@
 package com.tambara.resume.mapper.resume;
 
-import com.tambara.resume.dto.resume.EducationDto;
-import com.tambara.resume.model.resume.Education;
+import com.tambara.resume.persistence.model.resume.Education;
+import com.tambara.resume.web.dto.resume.EducationDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,4 +1,4 @@
-package com.tambara.resume.model.contact;
+package com.tambara.resume.persistence.model.contact;
 
 import lombok.ToString;
 import org.springframework.hateoas.ResourceSupport;

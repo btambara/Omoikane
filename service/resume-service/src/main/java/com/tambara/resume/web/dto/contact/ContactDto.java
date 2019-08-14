@@ -1,4 +1,4 @@
-package com.tambara.resume.dto.contact;
+package com.tambara.resume.web.dto.contact;
 
 import lombok.ToString;
 

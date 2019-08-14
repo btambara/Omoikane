@@ -1,9 +1,9 @@
-package com.tambara.resume.controller;
+package com.tambara.resume.web.controller;
 
-import com.tambara.resume.dto.contact.ContactDto;
 import com.tambara.resume.mapper.contact.ContactMapper;
-import com.tambara.resume.model.contact.Contact;
+import com.tambara.resume.persistence.model.contact.Contact;
 import com.tambara.resume.service.contact.ContactBaseService;
+import com.tambara.resume.web.dto.contact.ContactDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.hateoas.Link;

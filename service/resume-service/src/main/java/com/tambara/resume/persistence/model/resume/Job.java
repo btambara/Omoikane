@@ -1,4 +1,4 @@
-package com.tambara.resume.model.resume;
+package com.tambara.resume.persistence.model.resume;
 
 import lombok.ToString;
 import org.springframework.hateoas.ResourceSupport;

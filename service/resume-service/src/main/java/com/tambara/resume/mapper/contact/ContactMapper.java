@@ -1,7 +1,7 @@
 package com.tambara.resume.mapper.contact;
 
-import com.tambara.resume.dto.contact.ContactDto;
-import com.tambara.resume.model.contact.Contact;
+import com.tambara.resume.persistence.model.contact.Contact;
+import com.tambara.resume.web.dto.contact.ContactDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 

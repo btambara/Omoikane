@@ -1,4 +1,4 @@
-package com.tambara.resume.dto.resume;
+package com.tambara.resume.web.dto.resume;
 
 import lombok.Data;
 

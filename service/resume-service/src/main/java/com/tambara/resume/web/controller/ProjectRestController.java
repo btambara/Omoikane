@@ -1,10 +1,10 @@
-package com.tambara.resume.controller;
+package com.tambara.resume.web.controller;
 
-import com.tambara.resume.dto.resume.ProjectDto;
-import com.tambara.resume.http.OmoikaneMediaType;
 import com.tambara.resume.mapper.resume.ProjectMapper;
-import com.tambara.resume.model.resume.Project;
+import com.tambara.resume.persistence.model.resume.Project;
 import com.tambara.resume.service.resume.ProjectBaseService;
+import com.tambara.resume.web.dto.resume.ProjectDto;
+import com.tambara.resume.web.http.OmoikaneMediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.hateoas.Link;
