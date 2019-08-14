@@ -20,7 +20,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 //Purpose: The REST (HATEOAS) controller for the job part of the application.
 @RestController
-@RequestMapping(value = "/api/job")
+@RequestMapping(value = "/job")
 public class JobRestController {
 
     @Bean

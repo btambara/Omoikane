@@ -20,7 +20,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 //Purpose: The REST (HATEOAS) controller for the educational part of the application.
 @RestController
-@RequestMapping(value = "/api/education")
+@RequestMapping(value = "/education")
 public class EducationRestController {
 
     @Bean

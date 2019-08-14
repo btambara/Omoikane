@@ -58,6 +58,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+
+        web.ignoring().antMatchers("/*/")//
+                .antMatchers("/eureka/**")//
+                .antMatchers(HttpMethod.OPTIONS, "/**"); // Request type options should be allowed.
     }
 
     @Override
