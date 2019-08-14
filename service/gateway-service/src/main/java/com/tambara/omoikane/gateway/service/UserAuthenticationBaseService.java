@@ -12,6 +12,10 @@ public interface UserAuthenticationBaseService extends UserDetailsService {
 
     void updateEnabledAccount(String username, boolean isEnabled);
 
+    void updateUserPassword(String username, String currentPassword, String newPassword);
+
+    void resetUserPassword(String username, String resetToken, String newPassword);
+
     User getUser(String username);
 
     boolean logout(String token);

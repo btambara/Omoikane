@@ -4,6 +4,7 @@ import com.tambara.omoikane.gateway.service.UserAuthenticationBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -47,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/").hasAuthority("EUREKA_ACCESS");
         http.authorizeRequests().antMatchers("/h2-console/**").hasAuthority("H2_CONSOLE_ACCESS");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT, "/password").hasAuthority("CHANGE_PASSWORD_PRIVILEGE");
 
         http.httpBasic();
     }

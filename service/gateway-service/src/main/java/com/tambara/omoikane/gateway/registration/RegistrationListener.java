@@ -23,7 +23,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 
         @SuppressWarnings("StringBufferReplaceableByString") StringBuilder message = new StringBuilder();
         message.append("<h3>Welcome!</h3>");
-        message.append("Please click the link below to activate your account.");
+        message.append("Please click the link below to activate your account.<br>");
         message.append("<a href=\"");
         message.append(onRegistrationCompleteEvent.getAppUrl());
         message.append("/registration/confirm?token=");

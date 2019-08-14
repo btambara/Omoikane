@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class UserAuthenticationService implements UserAuthenticationBaseService 
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User registerUser(User user) {
@@ -102,12 +106,52 @@ public class UserAuthenticationService implements UserAuthenticationBaseService 
     }
 
     @Override
+    public void updateUserPassword(String username, String currentPassword, String newPassword) {
+        User user = userRepository.findByUsername(username);
+
+        if (currentPassword == null || newPassword == null) {
+            throw new HttpErrorException("Password cannot be NULL.", HttpStatus.CONFLICT);
+        }
+
+        if (currentPassword.equals(newPassword)) {
+            throw new HttpErrorException("Passwords are the same", HttpStatus.CONFLICT);
+        }
+
+        if (user != null) {
+            if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+                throw new HttpErrorException("Incorrect current password", HttpStatus.CONFLICT);
+            }
+
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+        } else {
+            throw new HttpErrorException("Username does not exist", HttpStatus.CONFLICT);
+        }
+    }
+
+    @Override
+    public void resetUserPassword(String username, String resetToken, String newPassword) {
+        User user = userRepository.findByUsername(username);
+
+        if (newPassword == null) {
+            throw new HttpErrorException("Password cannot be NULL.", HttpStatus.CONFLICT);
+        }
+
+        if (user != null) {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+        } else {
+            throw new HttpErrorException("Username does not exist.", HttpStatus.CONFLICT);
+        }
+    }
+
+    @Override
     public User getUser(String username) {
         User user = userRepository.findByUsername(username);
         if (user != null) {
             return user;
         } else {
-            throw new HttpErrorException("Username does not exist", HttpStatus.CONFLICT);
+            throw new HttpErrorException("Username does not exist.", HttpStatus.CONFLICT);
         }
     }
 

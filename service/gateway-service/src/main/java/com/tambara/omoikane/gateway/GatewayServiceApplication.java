@@ -1,5 +1,6 @@
 package com.tambara.omoikane.gateway;
 
+import com.tambara.omoikane.gateway.mapper.UserMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +22,11 @@ public class GatewayServiceApplication {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public UserMapper createUserMapper() {
+        return new UserMapper();
     }
 
     @Bean

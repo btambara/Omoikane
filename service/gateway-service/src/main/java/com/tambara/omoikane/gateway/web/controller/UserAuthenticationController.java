@@ -1,21 +1,18 @@
 package com.tambara.omoikane.gateway.web.controller;
 
-import com.tambara.omoikane.gateway.mapper.UserMapper;
+import com.tambara.omoikane.gateway.persistence.model.PasswordResetToken;
 import com.tambara.omoikane.gateway.persistence.model.User;
-import com.tambara.omoikane.gateway.persistence.model.VerificationToken;
-import com.tambara.omoikane.gateway.registration.OnRegistrationCompleteEvent;
-import com.tambara.omoikane.gateway.service.EmailBaseService;
+import com.tambara.omoikane.gateway.security.OnPasswordResetEvent;
+import com.tambara.omoikane.gateway.service.PasswordResetTokenBaseService;
 import com.tambara.omoikane.gateway.service.UserAuthenticationBaseService;
-import com.tambara.omoikane.gateway.service.VerificationTokenBaseService;
 import com.tambara.omoikane.gateway.web.dto.LoginRequest;
-import com.tambara.omoikane.gateway.web.dto.UserDto;
+import com.tambara.omoikane.gateway.web.dto.PasswordChangeRequest;
+import com.tambara.omoikane.gateway.web.dto.PasswordResetRequest;
 import com.tambara.omoikane.gateway.web.exception.HttpErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,28 +23,13 @@ import java.util.Calendar;
 @RequestMapping("/user")
 public class UserAuthenticationController {
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private UserAuthenticationBaseService userAuthenticationService;
 
-
     @Autowired
-    private VerificationTokenBaseService verificationTokenService;
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private EmailBaseService emailService;
+    private PasswordResetTokenBaseService passwordResetTokenService;
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
-
-    @Bean
-    public UserMapper createUserMapper() {
-        return new UserMapper();
-    }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
@@ -55,40 +37,43 @@ public class UserAuthenticationController {
         return new ResponseEntity<>("Logged in user " + loginRequest.getUsername(), HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/registration")
-    public ResponseEntity<String> register(@RequestBody UserDto userDto, final HttpServletRequest request) {
-        userDto.setId(-1L);
-        userDto.setEnabled(false);
-        userDto.setAccountNonExpired(true);
-        userDto.setCredentialsNonExpired(true);
-        userDto.setAccountNonLocked(true);
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
-        User user = userAuthenticationService.registerUser(userMapper.convertToContact(userDto));
-
+    @PostMapping("/password/reset/request")
+    public ResponseEntity<String> requestResetUserPassword(@RequestParam("username") final String username,
+                                                           final HttpServletRequest request) {
         final String appUrl = "http://" + request.getServerName() + ":" +
-                request.getServerPort() + request.getContextPath() + "/user";
-        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, appUrl));
+                request.getServerPort() + request.getContextPath();
 
-        return new ResponseEntity<>("Created user " + user.getUsername(), HttpStatus.CREATED);
+        User user = userAuthenticationService.getUser(username);
+
+        eventPublisher.publishEvent(new OnPasswordResetEvent(user, appUrl));
+
+        return new ResponseEntity<>("Started the process of a password reset.", HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/registration/confirm")
-    public ResponseEntity<String> confirmRegistration(@RequestParam("token") final String token) {
+    @PostMapping("/password/reset")
+    public ResponseEntity<String> resetUserPassword(@RequestParam("token") final String token,
+                                                    @RequestBody PasswordResetRequest request) {
+
+
         //Never NULL
-        VerificationToken verificationToken = verificationTokenService.getVerificationToken(token);
+        PasswordResetToken passwordResetToken = passwordResetTokenService.getPasswordResetToken(token);
 
         final Calendar cal = Calendar.getInstance();
-        if ((verificationToken.getTokenExpiration().getTime() - cal.getTime().getTime()) <= 0) {
-            throw new HttpErrorException("Token has expired", HttpStatus.CONFLICT);
+        if ((passwordResetToken.getTokenExpiration().getTime() - cal.getTime().getTime()) <= 0) {
+            throw new HttpErrorException("Token has expired. Please submit reset again.", HttpStatus.CONFLICT);
         }
 
-        boolean result = verificationTokenService.removeVerificationToken(verificationToken);
-        if (result) {
-            userAuthenticationService.updateEnabledAccount(
-                    verificationToken.getUser().getUsername(), true);
-        }
+        userAuthenticationService.resetUserPassword(request.getUsername(), token, request.getNewPassword());
 
-        return new ResponseEntity<>("Removed token", HttpStatus.CREATED);
+        return new ResponseEntity<>("Password reset.", HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity<String> updateUserPassword(@RequestBody PasswordChangeRequest request) {
+        userAuthenticationService.updateUserPassword(request.getUsername(), request.getOldPassword(),
+                request.getNewPassword()
+        );
+
+        return new ResponseEntity<>("Password has been changed.", HttpStatus.ACCEPTED);
     }
 }
