@@ -8,4 +8,4 @@ The gateway service will serve as the entry point for users. This service was bu
 The resume service will provide the user with RESTFUL operations for my resume. This service was developed on Spring Boot. 
 
 ## Client
-This was built off of Angular 7.
+The frontend was built off of Angular 7. I used the Materials framework to enhance the layout of the web application.
