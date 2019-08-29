@@ -1,0 +1,16 @@
+.app-nav-list-icon {
+  margin: 0 12px 0 12px;
+}
+
+.mat-subheader {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.mat-sidenav {
+  width: 300px;
+}
+
+.toolbar-title {
+  margin: 0 16px 0 16px;
+}

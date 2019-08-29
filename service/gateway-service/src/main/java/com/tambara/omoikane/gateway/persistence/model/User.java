@@ -3,7 +3,7 @@ package com.tambara.omoikane.gateway.persistence.model;
 import javax.persistence.*;
 import java.util.Collection;
 
-@Entity
+@Entity(name = "users")
 public class User {
     //Purpose: Unique ID
     //Data Type: long
