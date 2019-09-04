@@ -10,6 +10,10 @@ VOLUME /tmp
 # Make port 8761 available to the world outside this container
 EXPOSE 8761
 
+ENV OMOIKANE_DB_USERNAME=$OMOIKANE_DB_USERNAME
+
+ENV OMOIKANE_DB_PASSWORD=$OMOIKANE_DB_PASSWORD
+
 # The application's jar file
 ARG JAR_FILE=target/gateway-0.0.1-SNAPSHOT.jar
 
@@ -17,4 +21,4 @@ ARG JAR_FILE=target/gateway-0.0.1-SNAPSHOT.jar
 ADD ${JAR_FILE} gateway.jar
 
 # Run the jar file
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/gateway.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=prod","-jar","/gateway.jar"]
