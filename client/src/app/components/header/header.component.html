@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="toggleSidenav.emit()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <h1>Brian Tambara</h1>
+        <span fxFlex></span>
+        <a mat-button [routerLink]="'/about'"> About </a>
+        <a mat-button [routerLink]="'/resume'"> Resume </a>
+        <a fxHide.xs fxShow.gt-sm mat-button [routerLink]="'/login'"> Login </a>
+    </mat-toolbar-row>
+</mat-toolbar>
