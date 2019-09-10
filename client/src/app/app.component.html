@@ -1,5 +1,5 @@
 <mat-sidenav-container autosize>
-    <mat-sidenav #sidenav fixedInViewport="false">
+    <mat-sidenav postion="end" mode="over" #sidenav>
         <mat-toolbar>
             <mat-toolbar-row>
                 <h2> Brian Tambara </h2>
@@ -17,8 +17,7 @@
     </mat-sidenav>
     <mat-sidenav-content role="main">
 
-        <div fxLayout="column" fxLayoutAlign="start none"
-            style="flex: 1 1 100%;min-height:100vh;">
+        <div fxLayout="column" fxLayoutAlign="start none" style="flex: 1 1 100%;min-height:100vh;">
             <app-header (toggleSidenav)="sidenav.toggle()"></app-header>
             <router-outlet></router-outlet>
             <app-footer></app-footer>
