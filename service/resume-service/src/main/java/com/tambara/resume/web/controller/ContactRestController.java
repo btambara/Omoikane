@@ -4,6 +4,7 @@ import com.tambara.resume.mapper.contact.ContactMapper;
 import com.tambara.resume.persistence.model.contact.Contact;
 import com.tambara.resume.service.contact.ContactBaseService;
 import com.tambara.resume.web.dto.contact.ContactDto;
+import com.tambara.resume.web.http.OmoikaneMediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.hateoas.Link;
@@ -34,7 +35,7 @@ public class ContactRestController {
     @Autowired
     private ContactMapper contactMapper;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = OmoikaneMediaType.APPLICATION_HAL_JSON_VALUE)
     @ResponseBody
     public Resource<ContactDto> getContact() {
         ContactDto contactDto = contactMapper.convertToContactDto(personalContactService.get());

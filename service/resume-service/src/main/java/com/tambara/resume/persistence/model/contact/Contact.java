@@ -26,7 +26,6 @@ public class Contact extends ResourceSupport implements Serializable {
     //Purpose: First name
     //Data Type: String
     @NotNull
-    @Email()
     private String firstName;
 
     //Purpose: Last name
@@ -37,6 +36,7 @@ public class Contact extends ResourceSupport implements Serializable {
     //Purpose: Personal email
     //Data Type: String
     @NotNull
+    @Email()
     private String email;
 
     //Purpose: Github web address
