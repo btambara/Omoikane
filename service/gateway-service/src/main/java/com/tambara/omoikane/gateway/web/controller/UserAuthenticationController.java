@@ -8,7 +8,9 @@ import com.tambara.omoikane.gateway.service.UserAuthenticationBaseService;
 import com.tambara.omoikane.gateway.web.dto.LoginRequest;
 import com.tambara.omoikane.gateway.web.dto.PasswordChangeRequest;
 import com.tambara.omoikane.gateway.web.dto.PasswordResetRequest;
+import com.tambara.omoikane.gateway.web.dto.UserJwtDto;
 import com.tambara.omoikane.gateway.web.exception.HttpErrorException;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 
-@Controller
+@RestController
+@CrossOrigin
 @RequestMapping("/user")
 public class UserAuthenticationController {
     @Autowired
@@ -32,9 +35,9 @@ public class UserAuthenticationController {
     private ApplicationEventPublisher eventPublisher;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        userAuthenticationService.login(loginRequest.getUsername(), loginRequest.getPassword());
-        return new ResponseEntity<>("Logged in user " + loginRequest.getUsername(), HttpStatus.ACCEPTED);
+    public UserJwtDto login(@RequestBody LoginRequest loginRequest) {
+        String jwtToken = userAuthenticationService.login(loginRequest.getUsername(), loginRequest.getPassword());
+        return new UserJwtDto(loginRequest.getUsername(), jwtToken);
     }
 
     @PostMapping("/password/reset/request")

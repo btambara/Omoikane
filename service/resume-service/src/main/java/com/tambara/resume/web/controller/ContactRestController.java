@@ -19,6 +19,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 //Notes:
 //1) Only ONE entry should be in this table.
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/contact")
 public class ContactRestController {
 

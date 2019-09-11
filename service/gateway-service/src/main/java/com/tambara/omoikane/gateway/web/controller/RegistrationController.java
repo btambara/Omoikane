@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Collections;
 
 @Controller
+@CrossOrigin
 @RequestMapping("/registration")
 public class RegistrationController {
     @Autowired

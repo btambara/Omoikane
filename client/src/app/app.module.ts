@@ -19,6 +19,7 @@ import { AboutComponent } from './components/about/about.component';
 import { ResumeComponent } from './components/resume/resume.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
+import { EditComponent } from './components/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LoginComponent } from './components/login/login.component';
     AboutComponent,
     ResumeComponent,
     LoginComponent,
+    EditComponent,
   ],
   imports: [
     BrowserModule,

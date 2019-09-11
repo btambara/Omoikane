@@ -13,6 +13,10 @@
                 <mat-icon matListIcon class="app-nav-list-icon"> {{ item.icon }} </mat-icon>
                 {{ item.title }}
             </a>
+            <a *ngIf="isLoggedIn" mat-list-item (click)="sidenav.close()" routerLink="edit">
+                <mat-icon *ngIf="isLoggedIn" matListIcon class="app-nav-list-icon"> edit </mat-icon>
+                Edit
+            </a>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content role="main">

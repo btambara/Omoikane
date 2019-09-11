@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { SidenavService } from './services/sidenav.service';
+import { AuthenticationService } from './services/authentication.service';
 
 interface ROUTE {
   icon?: string;
@@ -31,7 +32,9 @@ export class AppComponent {
     },
   ];
 
-  constructor(private commandBarSidenavService: SidenavService) {
+  constructor(private commandBarSidenavService: SidenavService, private authService: AuthenticationService) {
     commandBarSidenavService.setSidenav(this.sidenav);
   }
+
+  get isLoggedIn() { return this.authService.isLoggedIn() };
 }

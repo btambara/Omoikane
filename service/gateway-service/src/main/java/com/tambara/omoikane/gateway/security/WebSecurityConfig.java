@@ -46,6 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**/logout/**").permitAll()
                 .antMatchers("/**/register/**").permitAll();
 
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.POST, "**/login/**").permitAll();
+
         http.authorizeRequests().antMatchers("/").hasAuthority("EUREKA_ACCESS");
         http.authorizeRequests().antMatchers("/h2-console/**").hasAuthority("H2_CONSOLE_ACCESS");
         http.authorizeRequests().antMatchers(HttpMethod.PUT, "/password").hasAuthority("CHANGE_PASSWORD_PRIVILEGE");
