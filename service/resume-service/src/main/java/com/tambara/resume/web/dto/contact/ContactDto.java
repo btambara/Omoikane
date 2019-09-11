@@ -16,6 +16,8 @@ public class ContactDto {
 
     private String githubAddress;
 
+    private String linkedinAddress;
+
     public Long getCid() {
         return cid;
     }
@@ -54,5 +56,13 @@ public class ContactDto {
 
     public void setGithubAddress(String githubAddress) {
         this.githubAddress = githubAddress;
+    }
+
+    public String getLinkedinAddress() {
+        return linkedinAddress;
+    }
+
+    public void setLinkedinAddress(String linkedinAddress) {
+        this.linkedinAddress = linkedinAddress;
     }
 }

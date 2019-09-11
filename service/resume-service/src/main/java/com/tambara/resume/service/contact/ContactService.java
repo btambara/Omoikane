@@ -42,6 +42,7 @@ public class ContactService implements ContactBaseService {
                     contact.setLastName(c.getLastName());
                     contact.setEmail(c.getEmail());
                     contact.setGithubAddress(c.getGithubAddress());
+                    contact.setLinkedinAddress(c.getLinkedinAddress());
                     return contactRepo.save(contact);
                 })
                 .orElseGet(() -> create(c));

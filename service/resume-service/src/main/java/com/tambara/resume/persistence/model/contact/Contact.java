@@ -15,7 +15,7 @@ import java.io.Serializable;
 @ToString
 public class Contact extends ResourceSupport implements Serializable {
 
-    private static final long serialVersionUID = 564673772121056521L;
+    private static final long serialVersionUID = 191084848012312380L;
 
     //Purpose: Unique ID
     //Data Type: long
@@ -43,6 +43,11 @@ public class Contact extends ResourceSupport implements Serializable {
     //Data Type: String
     @NotNull
     private String githubAddress;
+
+    //Purpose: Linkedin web address
+    //Data Type: String
+    @NotNull
+    private String linkedinAddress;
 
     public long getCid() {
         return cid;
@@ -82,5 +87,13 @@ public class Contact extends ResourceSupport implements Serializable {
 
     public void setGithubAddress(String githubAddress) {
         this.githubAddress = githubAddress;
+    }
+
+    public String getLinkedinAddress() {
+        return linkedinAddress;
+    }
+
+    public void setLinkedinAddress(String linkedinAddress) {
+        this.linkedinAddress = linkedinAddress;
     }
 }
