@@ -3,12 +3,19 @@
         [ngStyle.xs]="{'margin-bottom': '10px'}">
         <mat-card fxFill fxLayout="column" fxLayoutAlign="center center">
             <mat-card-header style="text-align: center">
-                <mat-card-title>Brian Tambara</mat-card-title>
+                <mat-card-title *ngIf="contact">{{contact.firstName}} {{contact.lastName}}</mat-card-title>
+                <mat-card-title *ngIf="!contact">FIRST-NAME LAST-NAME</mat-card-title>
                 <mat-card-subtitle>A Java Software Engineer looking for work.</mat-card-subtitle>
             </mat-card-header>
 
             <mat-card-content style="text-align: center">
-                INSERT GITHUB/EMAIL/LINKEDIN LINKS
+                <a mat-button *ngIf="contact" href="//{{contact.linkedinAddress}}" target="_blank"> Linkedin </a>
+                <a mat-button *ngIf="contact" href="//{{contact.githubAddress}}" target="_blank"> Github </a>
+                <a mat-button *ngIf="contact" href="mailto:{{contact.email}}"> Email </a>
+
+                <a mat-button *ngIf="!contact"> Linkedin </a>
+                <a mat-button *ngIf="!contact"> Github </a>
+                <a mat-button *ngIf="!contact"> Email </a>
             </mat-card-content>
         </mat-card>
     </div>
