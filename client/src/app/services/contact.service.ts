@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Contact } from '../models/contact';
 
 const httpOptions = {
@@ -21,7 +20,6 @@ export class ContactService {
   }
 
   addContactInformation(contact: Contact) {
-    console.log("FROM SERVICE: " + JSON.stringify(contact));
     return this.http
       .post(this.BASE_URL + "contact", JSON.stringify(contact), httpOptions)
   }
