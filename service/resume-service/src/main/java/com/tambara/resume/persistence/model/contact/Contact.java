@@ -15,7 +15,7 @@ import java.io.Serializable;
 @ToString
 public class Contact extends ResourceSupport implements Serializable {
 
-    private static final long serialVersionUID = 191084848012312380L;
+    private static final long serialVersionUID = -105700797549525479L;
 
     //Purpose: Unique ID
     //Data Type: long
@@ -32,6 +32,11 @@ public class Contact extends ResourceSupport implements Serializable {
     //Data Type: String
     @NotNull
     private String lastName;
+
+    //Purpose: A short message to display
+    //Data Type: String
+    @NotNull
+    private String message;
 
     //Purpose: Personal email
     //Data Type: String
@@ -71,6 +76,14 @@ public class Contact extends ResourceSupport implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getEmail() {

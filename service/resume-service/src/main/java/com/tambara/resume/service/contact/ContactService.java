@@ -40,6 +40,7 @@ public class ContactService implements ContactBaseService {
                 .map(contact -> {
                     contact.setFirstName(c.getFirstName());
                     contact.setLastName(c.getLastName());
+                    contact.setMessage(c.getMessage());
                     contact.setEmail(c.getEmail());
                     contact.setGithubAddress(c.getGithubAddress());
                     contact.setLinkedinAddress(c.getLinkedinAddress());

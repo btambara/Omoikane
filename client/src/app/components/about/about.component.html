@@ -16,7 +16,7 @@
     </div>
 
     <div fxFlex fxLayout.gt-lg="column">
-        <div fxFlex.gt-lg [ngStyle]="{'margin-bottom': '10px'}">
+        <div fxFlex.gt-lg>
             <mat-card fxFlex.gt-lg>
                 <mat-card-header>
                     <mat-card-title *ngIf="coverLetter"> {{coverLetter.headline}}</mat-card-title>
@@ -28,19 +28,6 @@
                 </mat-card-content>
             </mat-card>
         </div>
-
-        <div fxFlex.gt-lg="50%">
-            <mat-card fxFlex.gt-lg>
-                <mat-card-header>
-                    <mat-card-title>Language Proficiency</mat-card-title>
-                </mat-card-header>
-                <mat-divider></mat-divider>
-                <mat-card-content [ngStyle]="{'font-size':'18px','margin-top': '15px','margin-left': '15px'}">
-                    C,C++,Java, Python, MySQL, JavaScript, Angular 7, React Native, Spring Boot
-                </mat-card-content>
-            </mat-card>
-        </div>
-
     </div>
 
 </div>

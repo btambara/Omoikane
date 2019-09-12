@@ -31,26 +31,27 @@
                     </mat-form-field>
                     <mat-form-field>
                         <input type="text" matInput formControlName="emailField" placeholder="Email Account" require />
-                    </mat-form-field>     
+                    </mat-form-field>
                 </form>
 
                 <div fxLayout="column" fxFlex [formGroup]="coverLetterForm">
-            
-                        <mat-card-subtitle>About me</mat-card-subtitle>
-                        <mat-form-field>
-                            <input type="text" matInput formControlName="headlineField" placeholder="Header" require />
-                        </mat-form-field>
-                        <mat-form-field>
-                            <textarea type="text" matInput formControlName="coverLetterField" matTextareaAutosize matAutosizeMinRows=11.9
-                                matAutosizeMaxRows=11.9 placeholder="Tell your story"></textarea>
-                        </mat-form-field>
-              
+
+                    <mat-card-subtitle>About me</mat-card-subtitle>
+                    <mat-form-field>
+                        <input type="text" matInput formControlName="headlineField" placeholder="Header" require />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <textarea type="text" matInput formControlName="coverLetterField" matTextareaAutosize
+                            matAutosizeMinRows=11.9 matAutosizeMaxRows=11.9 placeholder="Tell your story"></textarea>
+                    </mat-form-field>
+
                 </div>
             </div>
         </div>
 
         <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit" (click)="saveChanges(contactForm, coverLetterForm)">Save
+            <button mat-raised-button color="primary" type="submit"
+                (click)="saveChanges(contactForm, coverLetterForm)">Save
                 changes</button>
         </mat-card-actions>
     </mat-card>
@@ -58,9 +59,15 @@
     <mat-card fxFlex>
         <div fxLayout="column">
             <mat-card-title>Edit Resume</mat-card-title>
-            <mat-card-subtitle>Statement</mat-card-subtitle>
+            <form fxLayout="column" fxFlex [formGroup]="resumeForm">
+                <mat-form-field>
+                    <input type="text" matInput  matAutosizeMinRows=5 matAutosizeMaxRows=5 formControlName="statementField" placeholder="Statement" require />
+                </mat-form-field>
+            </form>
             <mat-card-subtitle>Jobs</mat-card-subtitle>
+
             <mat-card-subtitle>Projects</mat-card-subtitle>
+            
             <mat-card-subtitle>Education/Certication</mat-card-subtitle>
 
             <mat-card-actions>

@@ -18,6 +18,8 @@ public class ContactDto {
 
     private String linkedinAddress;
 
+    private String message;
+
     public Long getCid() {
         return cid;
     }
@@ -64,5 +66,13 @@ public class ContactDto {
 
     public void setLinkedinAddress(String linkedinAddress) {
         this.linkedinAddress = linkedinAddress;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

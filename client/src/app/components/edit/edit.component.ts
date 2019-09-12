@@ -25,6 +25,10 @@ export class EditComponent implements OnInit {
     coverLetterField: new FormControl([Validators.required, Validators.minLength(1)]),
   });
 
+  resumeForm = new FormGroup({
+    statementField: new FormControl([Validators.required, Validators.minLength(1)]),
+  });
+
   contact: Contact;
   coverLetter: CoverLetter;
 
@@ -105,6 +109,8 @@ export class EditComponent implements OnInit {
           }
         }
       );
+
+      this.resumeForm.get('statementField').setValue("");
   }
 
   saveChanges(contactForm: FormGroup, coverLetterForm: FormGroup) {
