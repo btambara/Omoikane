@@ -48,7 +48,34 @@ export class EditComponent implements OnInit {
             this.contactForm.get('linkedinAddressField').setValue(this.contact.linkedinAddress);
           }
         },
-        error => { console.log(error) });
+        error => {
+          console.log(error);
+
+          this.contact = {
+            "cid": 0,
+            "firstName": "FIRST NAME",
+            "lastName": "LAST NAME",
+            "email": "email@email.com",
+            "githubAddress": "www.github.com",
+            "linkedinAddress": "www.linkedin.com"
+          };
+
+          this.contactForm = this.formBuilder.group({
+            'firstNameField': new FormControl(this.firstName, [Validators.required, Validators.minLength(1)]),
+            'lastNameField': new FormControl(this.lastName, [Validators.required, Validators.minLength(1)]),
+            'emailField': new FormControl(this.email, [Validators.required, Validators.minLength(1)]),
+            'githubAddressField': new FormControl(this.githubAddress, [Validators.required, Validators.minLength(1)]),
+            'linkedinAddressField': new FormControl(this.linkedinAddress, [Validators.required, Validators.minLength(1)]),
+          });
+
+          if (this.contact) {
+            this.contactForm.get('firstNameField').setValue(this.contact.firstName);
+            this.contactForm.get('lastNameField').setValue(this.contact.lastName);
+            this.contactForm.get('emailField').setValue(this.contact.email);
+            this.contactForm.get('githubAddressField').setValue(this.contact.githubAddress);
+            this.contactForm.get('linkedinAddressField').setValue(this.contact.linkedinAddress);
+          }
+        });
   }
 
   saveChanges(contactForm: FormGroup) {
