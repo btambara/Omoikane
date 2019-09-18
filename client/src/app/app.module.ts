@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {
-  MatToolbarModule, MatIconModule, MatButtonModule,MatInputModule,
-  MatSidenavModule, MatListModule, MatDividerModule,
+  MatToolbarModule, MatIconModule, MatButtonModule, MatInputModule, MatDialogModule,
+  MatSidenavModule, MatListModule, MatDividerModule, MatTableModule,
   MatMenuModule, MatCardModule, MatGridListModule, MatProgressSpinnerModule,
 } from '@angular/material';
 import {
@@ -20,6 +20,12 @@ import { ResumeComponent } from './components/resume/resume.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { EditComponent } from './components/edit/edit.component';
+import { JobDialogComponent } from './components/job-dialog/job-dialog.component';
+import { ProjectDialogComponent } from './components/project-dialog/project-dialog.component';
+import { EducationDialogComponent } from './components/education-dialog/education-dialog.component';
+import { JobService } from './services/job.service';
+import { ProjectService } from './services/project.service';
+import { EducationService } from './services/education.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +36,9 @@ import { EditComponent } from './components/edit/edit.component';
     ResumeComponent,
     LoginComponent,
     EditComponent,
+    JobDialogComponent,
+    ProjectDialogComponent,
+    EducationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +49,8 @@ import { EditComponent } from './components/edit/edit.component';
     FormsModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatTableModule,
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
@@ -52,7 +63,8 @@ import { EditComponent } from './components/edit/edit.component';
     MatSidenavModule,
     FlexLayoutModule
   ],
-  providers: [],
+  entryComponents: [JobDialogComponent, ProjectDialogComponent, EducationDialogComponent],
+  providers: [JobService, ProjectService, EducationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

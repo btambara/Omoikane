@@ -1,0 +1,35 @@
+<div fxLayout="column" fxLayoutGap="10px">
+    <h2 mat-dialog-title>{{job._dialogtitle}}</h2>
+    <form fxLayout="column" fxFlex fxLayoutGap="10px" [formGroup]="jobForm">
+        <mat-form-field>
+            <input type="text" matInput formControlName="nameField" placeholder="Company Name" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="locationField" placeholder="Company Location" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="websiteLinkField" placeholder="Company Website" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="titleField" placeholder="Job Title" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="jobSummaryField" placeholder="Job Summary" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="startedField" placeholder="Started Job" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="endedField" placeholder="Ended Job" required />
+        </mat-form-field>
+    </form>
+
+    <div mat-dialog-actions fxLayout="row" fxLayoutGap="10px">
+        <button fxFlex="0 0 auto" [disabled]="!jobForm.valid" mat-raised-button color="primary" (click)="onSaveClick()">
+            Save
+        </button>
+        <button fxFlex="0 0 auto" mat-raised-button color="primary" (click)="onNoClick()">
+            Cancel
+        </button>
+    </div>
+</div>

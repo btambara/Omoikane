@@ -7,7 +7,8 @@ import { MatSidenav } from '@angular/material';
   providedIn: 'root'
 })
 export class SidenavService {
-
+  BASE_URL = "http://157.230.207.59:8761/api/resume/"
+  
   private sidenav: MatSidenav;
   private opened = false;
 

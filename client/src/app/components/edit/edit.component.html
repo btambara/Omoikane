@@ -1,8 +1,8 @@
-<div fxLayout="column" fxLayoutGap="10px" [ngStyle]="{'margin':'10px','min-height':'100vh'}" *ngIf="contact">
+<div fxLayout="column" fxLayoutGap="15px" [ngStyle]="{'margin':'10px','min-height':'100vh'}" *ngIf="contact">
     <mat-card fxFlex>
         <div fxLayout="column">
             <mat-card-title>Edit About</mat-card-title>
-            <div fxLayout="row" fxLayoutGap="10px">
+            <div fxLayout="row" fxLayoutGap="15px">
                 <form fxLayout="column" fxFlex [formGroup]="contactForm">
                     <mat-card-subtitle>Contact Information</mat-card-subtitle>
                     <div fxLayout="row" fxLayoutGap="10px" fxFlex>
@@ -57,21 +57,208 @@
     </mat-card>
 
     <mat-card fxFlex>
-        <div fxLayout="column">
+        <div fxLayout="column" fxLayoutGap="15px">
             <mat-card-title>Edit Resume</mat-card-title>
-            <form fxLayout="column" fxFlex [formGroup]="resumeForm">
-                <mat-form-field>
-                    <input type="text" matInput  matAutosizeMinRows=5 matAutosizeMaxRows=5 formControlName="statementField" placeholder="Statement" require />
-                </mat-form-field>
-            </form>
-            <mat-card-subtitle>Jobs</mat-card-subtitle>
+            <div fxLayout="column">
+                <form fxLayout="column" fxFlex [formGroup]="resumeForm">
+                    <mat-form-field>
+                        <input type="text" matInput matAutosizeMinRows=5 matAutosizeMaxRows=5
+                            formControlName="statementField" placeholder="Statement" require />
+                    </mat-form-field>
+                </form>
+                <div fxLayout="row">
+                    <button fxFlex="0 0 auto" mat-raised-button color="primary" type="submit">Save Statement
+                        Changes</button>
+                </div>
+            </div>
 
-            <mat-card-subtitle>Projects</mat-card-subtitle>
-            
-            <mat-card-subtitle>Education/Certication</mat-card-subtitle>
+            <div fxLayout="column">
+                <mat-card-title fxFlex>Jobs</mat-card-title>
+
+                <div fxLayout="row">
+                    <button fxFlex="0 0 auto" mat-raised-button color="primary" (click)="openAddJobDialog()">
+                        <mat-icon>add</mat-icon>
+                        Add Job
+                    </button>
+                </div>
+
+                <mat-table #jobsTable [dataSource]="jobsDataSource">
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                        <mat-cell *matCellDef="let job"> {{job.name}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="location">
+                        <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+                        <mat-cell *matCellDef="let job"> {{job.location}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="websiteLink">
+                        <mat-header-cell *matHeaderCellDef> Website </mat-header-cell>
+                        <mat-cell *matCellDef="let job"> {{job.websiteLink}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="started">
+                        <mat-header-cell *matHeaderCellDef> Date Started </mat-header-cell>
+                        <mat-cell *matCellDef="let job"> {{job.started}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ended">
+                        <mat-header-cell *matHeaderCellDef> Date Ended </mat-header-cell>
+                        <mat-cell *matCellDef="let job"> {{job.ended}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="title">
+                        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+                        <mat-cell *matCellDef="let job"> {{job.title}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="jobSummary">
+                        <mat-header-cell *matHeaderCellDef> Job Summary </mat-header-cell>
+                        <mat-cell *matCellDef="let job"> {{job.jobSummary}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let job">
+                            <div fxLayout="row" fxLayoutGap="10px">
+                                <button mat-raised-button color="primary" (click)="openEditJobDialog(job)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                                <button mat-raised-button color="primary" (click)="deleteJob(job)">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="jobsDisplayColumns"></mat-header-row>
+                    <mat-row *matRowDef="let myRowData; columns: jobsDisplayColumns"></mat-row>
+                </mat-table>
+                <div *ngIf="jobs.length==0">
+                    <p>No Data</p>
+                </div>
+            </div>
+
+            <div fxLayout="column">
+                <mat-card-title fxFlex>Projects</mat-card-title>
+
+                <div fxLayout="row">
+                    <button fxFlex="0 0 auto" mat-raised-button color="primary" (click)="openAddProjectDialog()">
+                        <mat-icon>add</mat-icon>
+                        Add Project
+                    </button>
+                </div>
+
+                <mat-table #projectsTable [dataSource]="projectsDataSource">
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef> Company Name </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{project.name}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="location">
+                        <mat-header-cell *matHeaderCellDef> Company Location </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{project.location}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="title">
+                        <mat-header-cell *matHeaderCellDef> Project Title </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{project.title}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="summary">
+                        <mat-header-cell *matHeaderCellDef> Project Summary </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{project.summary}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="projectStart">
+                        <mat-header-cell *matHeaderCellDef> Date Started </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{project.projectStart}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="projectEnd">
+                        <mat-header-cell *matHeaderCellDef> Date Ended </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{project.projectEnd}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="websiteLink">
+                        <mat-header-cell *matHeaderCellDef> Website </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{project.websiteLink}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="repositoryLink">
+                        <mat-header-cell *matHeaderCellDef> Repository </mat-header-cell>
+                        <mat-cell *matCellDef="let project"> {{project.repositoryLink}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let project">
+                            <div fxLayout="row" fxLayoutGap="10px">
+                                <button mat-raised-button color="primary" (click)="openEditProjectDialog(project)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                                <button mat-raised-button color="primary" (click)="deleteProject(project)">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+                    
+                    <mat-header-row *matHeaderRowDef="projectsDisplayColumns"></mat-header-row>
+                    <mat-row *matRowDef="let myRowData; columns: projectsDisplayColumns"></mat-row>
+                </mat-table>
+                <div *ngIf="projects.length==0">
+                    <p>No Data</p>
+                </div>
+            </div>
+
+            <div fxLayout="column">
+                <mat-card-title>Education/Certification</mat-card-title>
+
+                <div fxLayout="row">
+                    <button fxFlex="0 0 auto" mat-raised-button color="primary" (click)="openAddEducationDialog()">
+                        <mat-icon>add</mat-icon>
+                        Add Education/Certification
+                    </button>
+                </div>
+
+                <mat-table #educationTB [dataSource]="educationDataSource">
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                        <mat-cell *matCellDef="let education"> {{education.name}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="location">
+                        <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+                        <mat-cell *matCellDef="let education"> {{education.location}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="websiteLink">
+                        <mat-header-cell *matHeaderCellDef> Website </mat-header-cell>
+                        <mat-cell *matCellDef="let education"> {{education.websiteLink}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="certification">
+                        <mat-header-cell *matHeaderCellDef> Certification </mat-header-cell>
+                        <mat-cell *matCellDef="let education"> {{education.certification}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="started">
+                        <mat-header-cell *matHeaderCellDef> Date Started</mat-header-cell>
+                        <mat-cell *matCellDef="let education"> {{education.started}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ended">
+                        <mat-header-cell *matHeaderCellDef> Date Ended </mat-header-cell>
+                        <mat-cell *matCellDef="let education"> {{education.ended}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                        <mat-cell *matCellDef="let education">
+                            <div fxLayout="row" fxLayoutGap="10px">
+                                <button mat-raised-button color="primary" (click)="openEditEducationDialog(education)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+
+                                <button mat-raised-button color="primary" (click)="deleteEducation(education)">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="educationDisplayColumns"></mat-header-row>
+                    <mat-row *matRowDef="let myRowData; columns: educationDisplayColumns"></mat-row>
+                </mat-table>
+                <div *ngIf="education.length == 0">
+                    <p>No Data</p>
+                </div>
+            </div>
 
             <mat-card-actions>
-                <button mat-raised-button color="primary" type="submit">Save changes</button>
+
             </mat-card-actions>
         </div>
     </mat-card>

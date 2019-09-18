@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Contact } from '../models/contact';
+import { Job } from '../models/job';
+import { stringify } from '@angular/compiler/src/util';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

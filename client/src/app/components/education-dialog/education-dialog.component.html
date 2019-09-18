@@ -1,0 +1,32 @@
+<div fxLayout="column" fxLayoutGap="10px">
+    <h2 mat-dialog-title>{{education._dialogtitle}}</h2>
+    <form fxLayout="column" fxFlex fxLayoutGap="10px" [formGroup]="educationForm">
+        <mat-form-field>
+            <input type="text" matInput formControlName="nameField" placeholder="School Name" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="locationField" placeholder="School Location" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="websiteLinkField" placeholder="School Website" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="certificationField" placeholder="Certification" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="startedField" placeholder="Started Job" required />
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput formControlName="endedField" placeholder="Ended Job" required />
+        </mat-form-field>
+    </form>
+
+    <div mat-dialog-actions fxLayout="row" fxLayoutGap="10px">
+        <button fxFlex="0 0 auto" [disabled]="!educationForm.valid" mat-raised-button color="primary" (click)="onSaveClick()">
+            Save
+        </button>
+        <button fxFlex="0 0 auto" mat-raised-button color="primary" (click)="onNoClick()">
+            Cancel
+        </button>
+    </div>
+</div>
