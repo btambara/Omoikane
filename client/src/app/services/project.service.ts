@@ -1,13 +1,15 @@
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Project } from '../models/project';
-
-@Injectable({
-  providedIn: 'root'
-})
+import { HalRetrieval } from '../models/hal-retrieval';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
+@Injectable({
+  providedIn: 'root'
+})
 
 export class ProjectService {
   BASE_URL = "http://157.230.207.59:8761/api/resume/"
@@ -16,12 +18,12 @@ export class ProjectService {
 
   getProjectInformation() {
     return this.http
-      .get<Project>(this.BASE_URL + "project");
+      .get(this.BASE_URL + "project");
   }
 
   getAllProjectsInformation() {
     return this.http
-      .get<Project[]>(this.BASE_URL + "project/all");
+      .get<HalRetrieval>(this.BASE_URL + "project/all");
   }
 
   addProjectInformation(project: Project) {

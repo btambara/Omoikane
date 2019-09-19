@@ -23,7 +23,7 @@ export class ProjectDialogComponent {
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ProjectDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public project: Project) {
+    @Inject(MAT_DIALOG_DATA) public project: any) {
 
     this.projectForm.get('nameField').setValue(this.project.name.trim());
     this.projectForm.get('locationField').setValue(this.project.location.trim());

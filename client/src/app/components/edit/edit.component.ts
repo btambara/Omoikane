@@ -161,7 +161,8 @@ export class EditComponent implements OnInit {
   initializeJobsTable() {
     this.jobService.getAllJobsInformation().subscribe(data => {
       if (data) {
-        if (data._embedded) {
+        data.hasOwnProperty
+        if (data.hasOwnProperty("_embedded")) {
           this.jobs = data._embedded.jobList;
           this.jobsDataSource = new MatTableDataSource(this.jobs);
           this.jobTable.renderRows();

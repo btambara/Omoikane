@@ -23,7 +23,7 @@ export class JobDialogComponent {
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<JobDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public job: Job) {
+    @Inject(MAT_DIALOG_DATA) public job: any) {
 
     this.jobForm.get('nameField').setValue(this.job.name.trim());
     this.jobForm.get('locationField').setValue(this.job.location.trim());

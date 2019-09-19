@@ -20,7 +20,7 @@ export class EducationDialogComponent {
 
   constructor(private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<EducationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public education: Education) {
+    @Inject(MAT_DIALOG_DATA) public education: any) {
     this.educationForm.get('nameField').setValue(this.education.name.trim());
     this.educationForm.get('locationField').setValue(this.education.location.trim());
     this.educationForm.get('websiteLinkField').setValue(this.education.websiteLink.trim());

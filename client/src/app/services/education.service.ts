@@ -1,13 +1,15 @@
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Education } from '../models/education';
-
-@Injectable({
-  providedIn: 'root'
-})
+import { HalRetrieval } from '../models/hal-retrieval';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
+@Injectable({
+  providedIn: 'root'
+})
 
 export class EducationService {
   BASE_URL = "http://157.230.207.59:8761/api/resume/"
@@ -16,12 +18,12 @@ export class EducationService {
 
   getEducationInformation() {
     return this.http
-      .get<Education>(this.BASE_URL + "education");
+      .get<any>(this.BASE_URL + "education");
   }
 
   getAllEducationInformation() {
     return this.http
-      .get<Education[]>(this.BASE_URL + "education/all");
+      .get<HalRetrieval>(this.BASE_URL + "education/all");
   }
 
   addEducationInformation(education: Education) {
