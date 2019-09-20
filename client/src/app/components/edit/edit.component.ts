@@ -335,12 +335,12 @@ export class EditComponent implements OnInit {
       if (dialogResult) {
         this.educationService.addEducationInformation(dialogResult).subscribe(
           serviceResult => {
-            this.projectService.getAllProjectsInformation().subscribe(data => {
+            this.educationService.getAllEducationInformation().subscribe(data => {
               if (data) {
                 if (data._embedded) {
-                  this.projects = data._embedded.projectList;
-                  this.projectsDataSource = new MatTableDataSource(this.projects);
-                  this.projectTable.renderRows();
+                  this.education = data._embedded.educationList;
+                  this.educationDataSource = new MatTableDataSource(this.education);
+                  this.educationTable.renderRows();
                 }
               }
             });
@@ -360,14 +360,18 @@ export class EditComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         const educationIndex = this.education.findIndex(obj => obj.eid === education.eid);
-        console.log("HOLY SHIT");
-        console.log(dialogRef);
+    
         this.educationService.updateEducationInformation(dialogResult).subscribe(
           result => {
-            this.educationDataSource.data[educationIndex] = dialogResult;
-            this.education = this.educationDataSource.data;
-            this.educationDataSource = new MatTableDataSource(this.education);
-            this.educationTable.renderRows();
+            this.educationService.getAllEducationInformation().subscribe(data => {
+              if (data) {
+                if (data._embedded) {
+                  this.education = data._embedded.educationList;
+                  this.educationDataSource = new MatTableDataSource(this.education);
+                  this.educationTable.renderRows();
+                }
+              }
+            });
           },
           error => { console.log(error) }
         );
