@@ -15,6 +15,8 @@ import { JobService } from 'src/app/services/job.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { EducationService } from 'src/app/services/education.service';
 import { Education } from 'src/app/models/education';
+import { Statement } from 'src/app/models/statement';
+import { StatementService } from 'src/app/services/statement.service';
 
 @Component({
   selector: 'app-edit',
@@ -40,7 +42,7 @@ export class EditComponent implements OnInit {
     coverLetterField: new FormControl([Validators.required, Validators.minLength(1)]),
   });
 
-  resumeForm = new FormGroup({
+  statementForm = new FormGroup({
     statementField: new FormControl([Validators.required, Validators.minLength(1)]),
   });
 
@@ -54,7 +56,8 @@ export class EditComponent implements OnInit {
     private projectService: ProjectService,
     private contactService: ContactService,
     private coverLetterService: CoverletterService,
-    private jobService: JobService
+    private jobService: JobService,
+    private statementService: StatementService
   ) { }
 
   ngOnInit() {
@@ -145,7 +148,9 @@ export class EditComponent implements OnInit {
   }
 
   initializeResume() {
-    this.resumeForm.get('statementField').setValue("");
+    this.initializeStatement();
+
+    this.statementForm.get('statementField').setValue("");
 
     this.initializeJobsTable();
 
@@ -161,7 +166,6 @@ export class EditComponent implements OnInit {
   initializeJobsTable() {
     this.jobService.getAllJobsInformation().subscribe(data => {
       if (data) {
-        data.hasOwnProperty
         if (data.hasOwnProperty("_embedded")) {
           this.jobs = data._embedded.jobList;
           this.jobsDataSource = new MatTableDataSource(this.jobs);
@@ -181,9 +185,15 @@ export class EditComponent implements OnInit {
       if (dialogResult) {
         this.jobService.addJobInformation(dialogResult).subscribe(
           serviceResult => {
-            this.jobs.push(dialogResult);
-            this.jobsDataSource = new MatTableDataSource(this.jobs);
-            this.jobTable.renderRows();
+            this.jobService.getAllJobsInformation().subscribe(data => {
+              if (data) {
+                if (data.hasOwnProperty("_embedded")) {
+                  this.jobs = data._embedded.jobList;
+                  this.jobsDataSource = new MatTableDataSource(this.jobs);
+                  this.jobTable.renderRows();
+                }
+              }
+            });
           },
           error => { console.log(error) }
         );
@@ -250,9 +260,15 @@ export class EditComponent implements OnInit {
       if (dialogResult) {
         this.projectService.addProjectInformation(dialogResult).subscribe(
           serviceResult => {
-            this.projects.push(dialogResult);
-            this.projectsDataSource = new MatTableDataSource(this.projects);
-            this.projectTable.renderRows();
+            this.projectService.getAllProjectsInformation().subscribe(data => {
+              if (data) {
+                if (data._embedded) {
+                  this.projects = data._embedded.projectList;
+                  this.projectsDataSource = new MatTableDataSource(this.projects);
+                  this.projectTable.renderRows();
+                }
+              }
+            });
           },
           error => { console.log(error) }
         );
@@ -284,7 +300,7 @@ export class EditComponent implements OnInit {
   }
 
   deleteProject(project: Project): void {
-    const projectIndex = this.jobs.findIndex(obj => obj.pid === project.pid);
+    const projectIndex = this.projects.findIndex(obj => obj.pid === project.pid);
 
     this.projectService.removeProject(project.pid).subscribe(result => {
       this.projectsDataSource.data.splice(projectIndex, 1);
@@ -319,9 +335,15 @@ export class EditComponent implements OnInit {
       if (dialogResult) {
         this.educationService.addEducationInformation(dialogResult).subscribe(
           serviceResult => {
-            this.education.push(dialogResult);
-            this.educationDataSource = new MatTableDataSource(this.education);
-            this.educationTable.renderRows();
+            this.projectService.getAllProjectsInformation().subscribe(data => {
+              if (data) {
+                if (data._embedded) {
+                  this.projects = data._embedded.projectList;
+                  this.projectsDataSource = new MatTableDataSource(this.projects);
+                  this.projectTable.renderRows();
+                }
+              }
+            });
           },
           error => { console.log(error) }
         );
@@ -338,7 +360,8 @@ export class EditComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         const educationIndex = this.education.findIndex(obj => obj.eid === education.eid);
-      
+        console.log("HOLY SHIT");
+        console.log(dialogRef);
         this.educationService.updateEducationInformation(dialogResult).subscribe(
           result => {
             this.educationDataSource.data[educationIndex] = dialogResult;
@@ -354,7 +377,6 @@ export class EditComponent implements OnInit {
 
   deleteEducation(education: Education): void {
     const educationIndex = this.education.findIndex(obj => obj.eid === education.eid);
-
     this.educationService.removeEducation(education.eid).subscribe(result => {
       this.educationDataSource.data.splice(educationIndex, 1);
       this.education = this.educationDataSource.data;
@@ -376,5 +398,42 @@ export class EditComponent implements OnInit {
 
     this.contactService.updateContactInformation(this.contact).subscribe(data => { }, error => { console.log(error) });
     this.coverLetterService.addCoverLetterInformation(this.coverLetter).subscribe(data => { }, error => { console.log(error) });
+  }
+
+  statement: Statement;
+
+  initializeStatement() {
+    this.statementService.getStatementInformation().subscribe(
+      result => {
+        this.statement = {
+          "sid": result.sid,
+          "statement": result.statement
+        };
+
+        if (this.statement) {
+          this.statementForm.get('statementField').setValue(this.statement.statement);
+        }
+      },
+      error => {
+        this.statement = {
+          "sid": 10,
+          "statement": "Sample statement"
+        };
+
+        if (this.statement) {
+          this.statementForm.get('statementField').setValue(this.statement.statement);
+
+          this.statementService.addStatementrInformation(this.statement).subscribe(data => { }, error => { console.log(error) });
+        }
+      }
+    );
+  }
+
+
+
+  saveStatement(statementForm: FormGroup) {
+    this.statement.statement = statementForm.value.statementField.toString().trim();
+
+    this.statementService.updateStatementInformation(this.statement).subscribe(data => { }, error => { console.log(error) });
   }
 }

@@ -60,15 +60,15 @@
         <div fxLayout="column" fxLayoutGap="15px">
             <mat-card-title>Edit Resume</mat-card-title>
             <div fxLayout="column">
-                <form fxLayout="column" fxFlex [formGroup]="resumeForm">
+                <form fxLayout="column" fxFlex [formGroup]="statementForm">
                     <mat-form-field>
                         <input type="text" matInput matAutosizeMinRows=5 matAutosizeMaxRows=5
                             formControlName="statementField" placeholder="Statement" require />
                     </mat-form-field>
                 </form>
                 <div fxLayout="row">
-                    <button fxFlex="0 0 auto" mat-raised-button color="primary" type="submit">Save Statement
-                        Changes</button>
+                    <button mat-raised-button color="primary" type="submit"
+                        (click)="saveStatement(statementForm)">Save Statement Changes</button>
                 </div>
             </div>
 
@@ -191,7 +191,7 @@
                             </div>
                         </mat-cell>
                     </ng-container>
-                    
+
                     <mat-header-row *matHeaderRowDef="projectsDisplayColumns"></mat-header-row>
                     <mat-row *matRowDef="let myRowData; columns: projectsDisplayColumns"></mat-row>
                 </mat-table>
