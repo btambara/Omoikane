@@ -2,6 +2,7 @@ package com.tambara.resume.web.dto.resume;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 //Purpose: Data transfer object (DTO) for Education
@@ -17,7 +18,7 @@ public class EducationDto {
 
     private String certification;
 
-    private Date started;
+    private LocalDate started;
 
-    private Date ended;
+    private LocalDate ended;
 }

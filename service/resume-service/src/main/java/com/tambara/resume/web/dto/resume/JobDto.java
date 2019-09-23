@@ -2,6 +2,8 @@ package com.tambara.resume.web.dto.resume;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
 
@@ -16,13 +18,13 @@ public class JobDto {
 
     private String websiteLink;
 
-    private Date started;
+    private LocalDate started;
 
-    private Date ended;
+    private LocalDate ended;
 
     private String title;
 
     private String jobSummary;
 
-    private Set<String> jobFootnotes;
+    private ArrayList<String> jobFootnotes;
 }

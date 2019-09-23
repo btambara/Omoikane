@@ -9,13 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @ToString
 public class Education extends ResourceSupport implements Serializable {
 
-    private static final long serialVersionUID = -4058620374967871492L;
+    private static final long serialVersionUID = 5789509026865717077L;
 
     //Purpose: Unique ID
     //Data Type: long
@@ -45,12 +45,12 @@ public class Education extends ResourceSupport implements Serializable {
     //Purpose: Start of certification
     //Data Type: java.util.Date
     @NotNull
-    private Date started;
+    private LocalDate started;
 
     //Purpose: End of certification
     //Data Type: java.util.Date
     @NotNull
-    private Date ended;
+    private LocalDate ended;
 
     public long getEid() {
         return eid;
@@ -93,19 +93,19 @@ public class Education extends ResourceSupport implements Serializable {
         this.certification = certification;
     }
 
-    public Date getStarted() {
+    public LocalDate getStarted() {
         return started;
     }
 
-    public void setStarted(Date started) {
+    public void setStarted(LocalDate started) {
         this.started = started;
     }
 
-    public Date getEnded() {
+    public LocalDate getEnded() {
         return ended;
     }
 
-    public void setEnded(Date ended) {
+    public void setEnded(LocalDate ended) {
         this.ended = ended;
     }
 }

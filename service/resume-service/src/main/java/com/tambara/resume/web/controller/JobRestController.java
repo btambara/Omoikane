@@ -5,6 +5,8 @@ import com.tambara.resume.persistence.model.resume.Job;
 import com.tambara.resume.service.resume.JobBaseService;
 import com.tambara.resume.web.dto.resume.JobDto;
 import com.tambara.resume.web.http.OmoikaneMediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.hateoas.Link;
@@ -23,6 +25,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @CrossOrigin
 @RequestMapping(value = "/job")
 public class JobRestController {
+    Logger logger = LoggerFactory.getLogger(JobRestController.class);
 
     @Bean
     public JobMapper createJobMapper() {
@@ -61,17 +64,23 @@ public class JobRestController {
 
     @PostMapping
     public void addJob(@RequestBody JobDto jdto) {
+        logger.info("ADD JOB REQUEST");
+        logger.info(jdto.toString());
         jobService.add(jobMapper.convertToModel(jdto));
     }
 
     @DeleteMapping("/{jid}")
     public void removeJob(@PathVariable final Long jid) {
+        logger.info("REMOVE JOB REQUEST");
+        logger.info("JOB_ID: " + jid);
         jobService.remove(jid);
     }
 
     @PutMapping("/{jid}")
     @ResponseStatus(HttpStatus.OK)
     public void updateJob(@RequestBody JobDto jdto) {
+        logger.info("UPDATE JOB REQUEST");
+        logger.info(jdto.toString());
         jobService.update(jobMapper.convertToModel(jdto));
     }
 }

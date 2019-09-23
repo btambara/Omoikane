@@ -3,6 +3,8 @@ package com.tambara.resume.service.resume;
 import com.tambara.resume.persistence.dao.resume.JobRepo;
 import com.tambara.resume.persistence.model.resume.Job;
 import com.tambara.resume.service.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import java.util.List;
 //Purpose: The service class for Jobs.
 @Service
 public class JobService implements JobBaseService {
+    Logger logger = LoggerFactory.getLogger(JobService.class);
+
     @Autowired
     private JobRepo jobRepo;
 
@@ -27,16 +31,19 @@ public class JobService implements JobBaseService {
 
     @Override
     public Job add(Job j) {
+        logger.info("ADDING: " + j.toString());
         return jobRepo.save(j);
     }
 
     @Override
     public void remove(long jid) {
+        logger.info("REMOVING: " + jid);
         jobRepo.deleteById(jid);
     }
 
     @Override
     public Job update(Job j) {
+        logger.info("UPDATING: " + j.toString());
         return jobRepo.findById(j.getJid())
                 .map(job -> {
                     job.setName(j.getName());
@@ -46,6 +53,7 @@ public class JobService implements JobBaseService {
                     job.setJobSummary(j.getJobSummary());
                     job.setStarted(j.getStarted());
                     job.setEnded(j.getEnded());
+                    job.setJobFootnotes(j.getJobFootnotes());
                     return jobRepo.save(job);
                 })
                 .orElseGet(() -> add(j));

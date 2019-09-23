@@ -3,19 +3,17 @@ package com.tambara.resume.persistence.model.resume;
 import lombok.ToString;
 import org.springframework.hateoas.ResourceSupport;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Entity
 @ToString
 public class Job extends ResourceSupport implements Serializable {
 
-    private static final long serialVersionUID = -1426928026536273748L;
+    private static final long serialVersionUID = 5661895021471339075L;
 
     //Purpose: Unique ID
     //Data Type: long
@@ -38,14 +36,14 @@ public class Job extends ResourceSupport implements Serializable {
     private String websiteLink;
 
     //Purpose: Start of job
-    //Data Type: java.util.Date
+    //Data Type: java.time
     @NotNull
-    private Date started;
+    private LocalDate started;
 
     //Purpose: End of job
-    //Data Type: java.util.Date
+    //Data Type: java.time
     //Notes: If left NULL, then job will be considered as current.
-    private Date ended;
+    private LocalDate ended;
 
     //Purpose: Job title
     //Data Type: String
@@ -55,10 +53,12 @@ public class Job extends ResourceSupport implements Serializable {
     //Purpose: Job summary
     //Data Type: String
     @NotNull
+    @Column(length=2500)
     private String jobSummary;
 
     //Purpose: Job foot notes. This will include accomplishments and projects.
     //Data Type: Set<String>
+    private ArrayList<String> jobFootnotes;
 
     public long getJid() {
         return jid;
@@ -92,19 +92,19 @@ public class Job extends ResourceSupport implements Serializable {
         this.websiteLink = websiteLink;
     }
 
-    public Date getStarted() {
+    public LocalDate getStarted() {
         return started;
     }
 
-    public void setStarted(Date started) {
+    public void setStarted(LocalDate started) {
         this.started = started;
     }
 
-    public Date getEnded() {
+    public LocalDate getEnded() {
         return ended;
     }
 
-    public void setEnded(Date ended) {
+    public void setEnded(LocalDate ended) {
         this.ended = ended;
     }
 
@@ -122,5 +122,13 @@ public class Job extends ResourceSupport implements Serializable {
 
     public void setJobSummary(String jobSummary) {
         this.jobSummary = jobSummary;
+    }
+
+    public ArrayList<String> getJobFootnotes() {
+        return jobFootnotes;
+    }
+
+    public void setJobFootnotes(ArrayList<String> jobFootnotes) {
+        this.jobFootnotes = jobFootnotes;
     }
 }

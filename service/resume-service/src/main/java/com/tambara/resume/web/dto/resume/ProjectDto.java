@@ -2,6 +2,7 @@ package com.tambara.resume.web.dto.resume;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 //Purpose: Data transfer object (DTO) for Project
@@ -18,9 +19,9 @@ public class ProjectDto {
 
     private String summary;
 
-    private Date projectStart;
+    private LocalDate projectStart;
 
-    private Date projectEnd;
+    private LocalDate projectEnd;
 
     private String websiteLink;
 
