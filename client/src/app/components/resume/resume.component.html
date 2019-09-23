@@ -1,3 +1,129 @@
-<div class="container">
-    <p>resume works!</p>
+<div fxLayout="column" fxLayoutGap="10px" [ngStyle]="{'margin':'10px','min-height':'100vh'}">
+    <div fxLayout="column">
+        <mat-card *ngIf="contact" fxLayout="column" fxLayoutAlign="center center">
+            <mat-card-title>
+                {{contact.firstName}} {{contact.lastName}}
+            </mat-card-title>
+            <mat-card-subtitle>
+                Location: Los Angeles, California
+            </mat-card-subtitle>
+            <mat-card-subtitle>
+                Email: {{ contact.email }}
+            </mat-card-subtitle>
+            <mat-card-subtitle>
+                Github: {{ contact.githubAddress }}
+            </mat-card-subtitle>
+        </mat-card>
+    </div>
+
+    <mat-card *ngIf="statement">
+        <mat-card-title>
+            Java Software Engineer
+        </mat-card-title>
+        <mat-card-content>
+            {{statement.statement}}
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-title>
+            Professional Experience
+        </mat-card-title>
+        <div *ngIf="!jobs">No Jobs</div>
+        <div fxLayout="column" fxLayoutGap="10px" *ngIf="jobs">
+            <mat-card *ngFor="let job of jobs">
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-card-title>
+                        {{job.name}}
+                    </mat-card-title>
+                    <a mat-button *ngIf="job" href="//{{job.websiteLink}}" target="_blank">
+                        <mat-icon>link</mat-icon>
+                    </a>
+                </div>
+
+                <mat-card-content>
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <div fxFlex fxLayout="row">
+                            <div fxFlex>
+                                {{job.title}} - {{job.location}}
+                            </div>
+                            <div fxFlex fxLayoutAlign="center center">
+                                {{transformDate(job.started)}} - {{transformDate(job.ended)}}
+                            </div>
+                        </div>
+                        <div>
+                            {{job.jobSummary}}
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-title>
+            Projects
+        </mat-card-title>
+        <div *ngIf="!projects">No Projects</div>
+        <div fxLayout="column" fxLayoutGap="10px" *ngIf="projects">
+            <mat-card *ngFor="let project of projects">
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-card-title>
+                        {{project.name}}
+                    </mat-card-title>
+                    <a mat-button *ngIf="project" href="//{{project.websiteLink}}" target="_blank">
+                        <mat-icon>link</mat-icon>
+                    </a>
+                </div>
+
+                <mat-card-content>
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <div fxFlex fxLayout="row">
+                            <div fxFlex>
+                                {{project.title}} - {{project.location}}
+                            </div>
+                            <div fxFlex fxLayoutAlign="center center">
+                                {{transformDate(project.projectStart)}} - {{transformDate(project.projectEnd)}}
+                            </div>
+                        </div>
+                        <div>
+                            {{project.summary}}
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-title>
+            Education
+        </mat-card-title>
+        <div *ngIf="!education">No Education</div>
+        <div fxLayout="column" fxLayoutGap="10px" *ngIf="education">
+            <mat-card *ngFor="let edu of education">
+                <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-card-title>
+                        {{edu.name}}
+                    </mat-card-title>
+                    <a mat-button *ngIf="edu" href="//{{edu.websiteLink}}" target="_blank">
+                        <mat-icon>link</mat-icon>
+                    </a>
+                </div>
+
+                <mat-card-content>
+                    <div fxLayout="column">
+                        <div fxFlex fxLayout="row">
+                            <div fxFlex>
+                                {{edu.certification}} - {{edu.location}}
+                            </div>
+                            <div fxFlex fxLayoutAlign="center center">
+                                {{transformDate(edu.started)}} - {{transformDate(edu.ended)}}
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-card>
 </div>

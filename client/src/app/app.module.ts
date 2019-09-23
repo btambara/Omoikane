@@ -26,6 +26,7 @@ import { EducationDialogComponent } from './components/education-dialog/educatio
 import { JobService } from './services/job.service';
 import { ProjectService } from './services/project.service';
 import { EducationService } from './services/education.service';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import { EducationService } from './services/education.service';
     FlexLayoutModule
   ],
   entryComponents: [JobDialogComponent, ProjectDialogComponent, EducationDialogComponent],
-  providers: [JobService, ProjectService, EducationService],
+  providers: [JobService, ProjectService, EducationService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
