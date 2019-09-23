@@ -5,8 +5,11 @@ import com.tambara.omoikane.gateway.persistence.dao.RoleRepository;
 import com.tambara.omoikane.gateway.persistence.model.Privilege;
 import com.tambara.omoikane.gateway.persistence.model.Role;
 import com.tambara.omoikane.gateway.persistence.model.User;
+import com.tambara.omoikane.gateway.registration.OnCreatedAdminCompleteEvent;
 import com.tambara.omoikane.gateway.service.UserAuthenticationBaseService;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.lang.NonNull;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class RoleDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -32,6 +36,9 @@ public class RoleDataLoader implements ApplicationListener<ContextRefreshedEvent
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional
@@ -55,9 +62,29 @@ public class RoleDataLoader implements ApplicationListener<ContextRefreshedEvent
         final Role userRole = createRoleIfNotFound("ROLE_USER", userPrivileges);
 
         // == create initial user
-        createUserIfNotFound("admin", "admin@test.com", "A1vj%40hsU%k", new ArrayList<>(Collections.singletonList(adminRole)));
-        createUserIfNotFound("user", "user@test.com", "password", new ArrayList<>(Collections.singletonList(userRole)));
+        createAdminIfNotFoundAndSEndPassword("btambara", "btambara@gmail.com", generatePassword(), new ArrayList<>(Collections.singletonList(adminRole)));
+
         alreadySetup = true;
+    }
+
+    public String generatePassword() {
+        String upperCaseLetters = RandomStringUtils.random(2, 65, 90, true, true);
+        String lowerCaseLetters = RandomStringUtils.random(2, 97, 122, true, true);
+        String numbers = RandomStringUtils.randomNumeric(2);
+        String specialChar = RandomStringUtils.random(2, 33, 47, false, false);
+        String totalChars = RandomStringUtils.randomAlphanumeric(2);
+        String combinedChars = upperCaseLetters.concat(lowerCaseLetters)
+                .concat(numbers)
+                .concat(specialChar)
+                .concat(totalChars);
+        List<Character> pwdChars = combinedChars.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.toList());
+        Collections.shuffle(pwdChars);
+        String password = pwdChars.stream()
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                .toString();
+        return password;
     }
 
     @Transactional
@@ -82,7 +109,7 @@ public class RoleDataLoader implements ApplicationListener<ContextRefreshedEvent
     }
 
     @Transactional
-    private User createUserIfNotFound(final String username, final String email,
+    private User createAdminIfNotFoundAndSEndPassword(final String username, final String email,
                                       final String password, final Collection<Role> roles) {
         User user = new User();
         user.setId(-1L);
@@ -94,7 +121,14 @@ public class RoleDataLoader implements ApplicationListener<ContextRefreshedEvent
         user.setCredentialsNonExpired(true);
         user.setEnabled(true);
         user.setRoles(roles);
-        return userAuthenticationService.registerUser(user);
+
+        User returnUser = userAuthenticationService.registerUser(user);
+
+        if(returnUser != null){
+            eventPublisher.publishEvent(new OnCreatedAdminCompleteEvent(user, password));
+        }
+
+        return returnUser;
     }
 
 }
