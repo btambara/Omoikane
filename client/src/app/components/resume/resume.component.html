@@ -54,6 +54,21 @@
                         <div>
                             {{job.jobSummary}}
                         </div>
+                        <div>
+                            <ul>
+                                <li *ngFor="let footnote of job.jobFootnotes" type="square">{{footnote}}</li>
+                            </ul>
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <mat-card-subtitle>
+                                Technical Environment:
+                            </mat-card-subtitle>
+                            <mat-chip-list>
+                                <mat-chip *ngFor="let item of job.technicalEnvironment">
+                                    {{item.toString()}}
+                                </mat-chip>
+                            </mat-chip-list>
+                        </div>
                     </div>
                 </mat-card-content>
             </mat-card>
@@ -88,6 +103,16 @@
                         </div>
                         <div>
                             {{project.summary}}
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <mat-card-subtitle>
+                                Technical Environment:
+                            </mat-card-subtitle>
+                            <mat-chip-list>
+                                <mat-chip *ngFor="let item of project.technicalEnvironment">
+                                    {{item.toString()}}
+                                </mat-chip>
+                            </mat-chip-list>
                         </div>
                     </div>
                 </mat-card-content>

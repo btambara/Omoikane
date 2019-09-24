@@ -25,10 +25,24 @@
         <mat-form-field>
             <input type="text" matInput formControlName="repositoryLinkField" placeholder="Repository" required />
         </mat-form-field>
+
+        <mat-form-field>
+            <mat-chip-list #chipList aria-label="Technical Environment">
+                <mat-chip *ngFor="let footnote of projectForm.value.technicalNoteArr" [selectable]="true" [removable]="true"
+                    (removed)="removeTechnicalNote(footnote)">
+                    {{footnote.toString()}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input matInput placeholder="Technical Item" [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="addTechnicalNote($event)">
+            </mat-chip-list>
+        </mat-form-field>
     </form>
 
     <div mat-dialog-actions fxLayout="row" fxLayoutGap="10px">
-        <button fxFlex="0 0 auto" [disabled]="!projectForm.valid" mat-raised-button color="primary" (click)="onSaveClick()">
+        <button fxFlex="0 0 auto" [disabled]="!projectForm.valid" mat-raised-button color="primary"
+            (click)="onSaveClick()">
             Save
         </button>
         <button fxFlex="0 0 auto" mat-raised-button color="primary" (click)="onNoClick()">

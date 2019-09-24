@@ -58,7 +58,7 @@ export class ResumeComponent implements OnInit {
             let d1 = new Date(job1.ended);
             let d2 = new Date(job2.ended);
 
-            return d1.getDate() + d2.getDate();
+            return d1.getDate() - d2.getDate();
           });
           console.log(this.jobs);
         }
@@ -74,7 +74,7 @@ export class ResumeComponent implements OnInit {
             let p1 = new Date(project1.projectEnd);
             let p2 = new Date(project2.projectEnd);
 
-            return p1.getDate() + p2.getDate();
+            return p1.getDate() - p2.getDate();
           });
           console.log(this.projects);
         }
@@ -90,7 +90,7 @@ export class ResumeComponent implements OnInit {
             let e1 = new Date(education1.ended);
             let e2 = new Date(education2.ended);
 
-            return e1.getDate() + e2.getDate();
+            return e1.getDate() - e2.getDate();
           });
           console.log(this.education);
         }

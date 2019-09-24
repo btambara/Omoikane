@@ -1,27 +1,60 @@
 <div fxLayout="column" fxLayoutGap="10px">
     <h2 mat-dialog-title>{{job._dialogtitle}}</h2>
     <form fxLayout="column" fxFlex fxLayoutGap="10px" [formGroup]="jobForm">
-        <mat-form-field>
-            <input type="text" matInput formControlName="nameField" placeholder="Company Name" required />
-        </mat-form-field>
-        <mat-form-field>
-            <input type="text" matInput formControlName="locationField" placeholder="Company Location" required />
-        </mat-form-field>
-        <mat-form-field>
-            <input type="text" matInput formControlName="websiteLinkField" placeholder="Company Website" required />
-        </mat-form-field>
-        <mat-form-field>
-            <input type="text" matInput formControlName="titleField" placeholder="Job Title" required />
-        </mat-form-field>
-        <mat-form-field>
-            <input type="text" matInput formControlName="jobSummaryField" placeholder="Job Summary" required />
-        </mat-form-field>
-        <mat-form-field>
-            <input type="text" matInput formControlName="startedField" placeholder="Started Job" required />
-        </mat-form-field>
-        <mat-form-field>
-            <input type="text" matInput formControlName="endedField" placeholder="Ended Job" required />
-        </mat-form-field>
+        <div fxLayout="row">
+            <div fxLayout="column" fxFlex>
+                <mat-form-field>
+                    <input type="text" matInput formControlName="nameField" placeholder="Company Name" required />
+                </mat-form-field>
+                <mat-form-field>
+                    <input type="text" matInput formControlName="locationField" placeholder="Company Location"
+                        required />
+                </mat-form-field>
+                <mat-form-field>
+                    <input type="text" matInput formControlName="websiteLinkField" placeholder="Company Website"
+                        required />
+                </mat-form-field>
+                <mat-form-field>
+                    <input type="text" matInput formControlName="titleField" placeholder="Job Title" required />
+                </mat-form-field>
+                <mat-form-field>
+                    <input type="text" matInput formControlName="jobSummaryField" placeholder="Job Summary" required />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-chip-list #footnoteList aria-label="Job Footnotes">
+                        <mat-chip *ngFor="let footnote of jobForm.value.footnoteArr" [selectable]="true" [removable]="true"
+                            (removed)="removeFootnote(footnote)">
+                            {{footnote.toString()}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input matInput  placeholder="Footnote Item" [matChipInputFor]="footnoteList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                            (matChipInputTokenEnd)="addFootnote($event)">
+                    </mat-chip-list>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input type="text" matInput formControlName="startedField" placeholder="Started Job" required />
+                </mat-form-field>
+                <mat-form-field>
+                    <input type="text" matInput formControlName="endedField" placeholder="Ended Job" required />
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-chip-list #chipList aria-label="Technical Environment">
+                        <mat-chip *ngFor="let footnote of jobForm.value.technicalNoteArr" [selectable]="true" [removable]="true"
+                            (removed)="removeTechnicalNote(footnote)">
+                            {{footnote.toString()}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input matInput  placeholder="Technical Item" [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                            (matChipInputTokenEnd)="addTechnicalNote($event)">
+                    </mat-chip-list>
+                </mat-form-field>
+            </div>
+        </div>
     </form>
 
     <div mat-dialog-actions fxLayout="row" fxLayoutGap="10px">

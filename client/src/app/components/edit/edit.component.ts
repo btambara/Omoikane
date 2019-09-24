@@ -166,6 +166,7 @@ export class EditComponent implements OnInit {
   initializeJobsTable() {
     this.jobService.getAllJobsInformation().subscribe(data => {
       if (data) {
+        console.log(data);
         if (data.hasOwnProperty("_embedded")) {
           this.jobs = data._embedded.jobList;
           this.jobsDataSource = new MatTableDataSource(this.jobs);
@@ -177,14 +178,27 @@ export class EditComponent implements OnInit {
 
   openAddJobDialog(): void {
     const dialogRef = this.dialog.open(JobDialogComponent, {
-      width: '450px',
-      data: { _dialogtitle: "Add Job", jid: 0, name: "", location: "", websiteLink: "", started: "", ended: "", title: "", jobSummary: "", jobFootnotes: null }
+      width: '550px',
+      data: {
+        _dialogtitle: "Add Job",
+        jid: 0, name: "",
+        location: "",
+        websiteLink: "",
+        started: "",
+        ended: "",
+        title: "",
+        jobSummary: "",
+        jobFootnotes: new Array<String>(),
+        technicalEnvironment: new Array<String>()
+      }
+
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         this.jobService.addJobInformation(dialogResult).subscribe(
           serviceResult => {
+            console.log(dialogResult);
             this.jobService.getAllJobsInformation().subscribe(data => {
               if (data) {
                 if (data.hasOwnProperty("_embedded")) {
@@ -204,7 +218,19 @@ export class EditComponent implements OnInit {
   openEditJobDialog(job: Job): void {
     const dialogRef = this.dialog.open(JobDialogComponent, {
       width: '450px',
-      data: { _dialogtitle: "Edit Job", jid: job.jid, name: job.name, location: job.location, websiteLink: job.websiteLink, started: job.started, ended: job.ended, title: job.title, jobSummary: job.jobSummary, jobFootnotes: job.jobFootnotes }
+      data: {
+        _dialogtitle: "Edit Job",
+        jid: job.jid,
+        name: job.name,
+        location: job.location,
+        websiteLink: job.websiteLink,
+        started: job.started,
+        ended: job.ended,
+        title: job.title,
+        jobSummary: job.jobSummary,
+        jobFootnotes: job.jobFootnotes,
+        technicalEnvironment: job.technicalEnvironment
+      }
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
@@ -253,7 +279,19 @@ export class EditComponent implements OnInit {
   openAddProjectDialog(): void {
     const dialogRef = this.dialog.open(ProjectDialogComponent, {
       width: '450px',
-      data: { _dialogtitle: "Add Project", pid: 0, name: "", location: "", title: "", summary: "", projectStart: "", projectEnd: "", websiteLink: "", repositoryLink: "" }
+      data: {
+        _dialogtitle: "Add Project",
+        pid: 0,
+        name: "",
+        location: "",
+        title: "",
+        summary: "",
+        projectStart: "",
+        projectEnd: "",
+        websiteLink: "",
+        repositoryLink: "",
+        technicalEnvironment: new Array<String>()
+      }
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
@@ -279,7 +317,19 @@ export class EditComponent implements OnInit {
   openEditProjectDialog(project: Project): void {
     const dialogRef = this.dialog.open(ProjectDialogComponent, {
       width: '450px',
-      data: { _dialogtitle: "Edit Project", pid: project.pid, name: project.name, location: project.location, title: project.title, summary: project.summary, projectStart: project.projectStart, projectEnd: project.projectEnd, websiteLink: project.websiteLink, repositoryLink: project.repositoryLink }
+      data: {
+        _dialogtitle: "Edit Project",
+        pid: project.pid,
+        name: project.name,
+        location: project.location,
+        title: project.title,
+        summary: project.summary
+        , projectStart: project.projectStart,
+        projectEnd: project.projectEnd,
+        websiteLink: project.websiteLink,
+        repositoryLink: project.repositoryLink,
+        technicalEnvironment: project.technicalEnvironment
+      }
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
@@ -360,7 +410,7 @@ export class EditComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult) {
         const educationIndex = this.education.findIndex(obj => obj.eid === education.eid);
-    
+
         this.educationService.updateEducationInformation(dialogResult).subscribe(
           result => {
             this.educationService.getAllEducationInformation().subscribe(data => {

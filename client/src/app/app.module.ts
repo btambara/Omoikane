@@ -8,6 +8,7 @@ import {
   MatSidenavModule, MatListModule, MatDividerModule, MatTableModule,
   MatMenuModule, MatCardModule, MatGridListModule, MatProgressSpinnerModule,
 } from '@angular/material';
+import {MatChipsModule} from '@angular/material/chips';
 import {
   MatFormFieldModule
 } from '@angular/material/form-field';
@@ -51,6 +52,7 @@ import {DatePipe} from '@angular/common';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    MatChipsModule,
     MatTableModule,
     MatInputModule,
     MatFormFieldModule,

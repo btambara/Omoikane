@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Project } from 'src/app/models/project';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
   selector: 'app-project-dialog',
@@ -9,21 +10,31 @@ import { Project } from 'src/app/models/project';
   styleUrls: ['./project-dialog.component.css']
 })
 export class ProjectDialogComponent {
-  projectForm = new FormGroup({
-    nameField: new FormControl([Validators.required, Validators.minLength(1)]),
-    locationField: new FormControl([Validators.required, Validators.minLength(1)]),
-    titleField: new FormControl([Validators.required, Validators.minLength(1)]),
-    summaryField: new FormControl([Validators.required, Validators.minLength(1)]),
-    startedField: new FormControl([Validators.required, Validators.minLength(1)]),
-    endedField: new FormControl([Validators.required, Validators.minLength(1)]),
-    websiteLinkField: new FormControl([Validators.required, Validators.minLength(1)]),
-    repositoryLinkField: new FormControl([Validators.required, Validators.minLength(1)]),
-  });
+  footnoteArr: FormArray;
+  projectForm: FormGroup;
+  visible = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ProjectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public project: any) {
+    if (this.project.technicalEnvironment == null) {
+      this.project.technicalEnvironment = new Array<String>();
+    }
+
+    this.projectForm = new FormGroup({
+      nameField: new FormControl([Validators.required, Validators.minLength(1)]),
+      locationField: new FormControl([Validators.required, Validators.minLength(1)]),
+      titleField: new FormControl([Validators.required, Validators.minLength(1)]),
+      summaryField: new FormControl([Validators.required, Validators.minLength(1)]),
+      startedField: new FormControl([Validators.required, Validators.minLength(1)]),
+      endedField: new FormControl([Validators.required, Validators.minLength(1)]),
+      websiteLinkField: new FormControl([Validators.required, Validators.minLength(1)]),
+      repositoryLinkField: new FormControl([Validators.required, Validators.minLength(1)]),
+      technicalNoteArr: this.formBuilder.array(this.project.technicalEnvironment),
+    });
 
     this.projectForm.get('nameField').setValue(this.project.name.trim());
     this.projectForm.get('locationField').setValue(this.project.location.trim());
@@ -46,6 +57,8 @@ export class ProjectDialogComponent {
     this.project.projectEnd = this.projectForm.value.endedField.toString().trim();
     this.project.websiteLink = this.projectForm.value.websiteLinkField.toString().trim();
     this.project.repositoryLink = this.projectForm.value.repositoryLinkField.toString().trim();
+    this.project.technicalEnvironment = this.projectForm.value.technicalNoteArr;
+    console.log(this.project);
 
     this.dialogRef.close(this.project);
   }
@@ -54,4 +67,24 @@ export class ProjectDialogComponent {
     this.dialogRef.close();
   }
 
+  addTechnicalNote(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    if ((value || '').trim()) {
+      this.projectForm.value.technicalNoteArr.push(value.trim());
+    }
+
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  removeTechnicalNote(tech: string): void {
+    const index = this.projectForm.value.technicalNoteArr.indexOf(tech);
+
+    if (index >= 0) {
+      this.projectForm.value.technicalNoteArr.splice(index, 1);
+    }
+  }
 }

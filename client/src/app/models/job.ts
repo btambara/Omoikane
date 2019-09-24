@@ -8,4 +8,5 @@ export class Job {
     title: string;
     jobSummary: string;
     jobFootnotes: any;
+    technicalEnvironment: any;
 }

@@ -8,4 +8,5 @@ export class Project {
     projectEnd: string;
     websiteLink: string;
     repositoryLink: string;
+    technicalEnvironment: any;
 }
