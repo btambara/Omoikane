@@ -47,6 +47,7 @@ public class ProjectService implements ProjectBaseService {
                     project.setRepositoryLink(p.getSummary());
                     project.setProjectStart(p.getProjectStart());
                     project.setProjectEnd(p.getProjectEnd());
+                    project.setTechnicalEnvironment(p.getTechnicalEnvironment());
                     return projectRepo.save(project);
                 })
                 .orElseGet(() -> add(p));

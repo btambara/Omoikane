@@ -27,4 +27,6 @@ public class JobDto {
     private String jobSummary;
 
     private ArrayList<String> jobFootnotes;
+
+    private ArrayList<String> technicalEnvironment;
 }

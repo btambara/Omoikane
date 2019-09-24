@@ -54,6 +54,7 @@ public class JobService implements JobBaseService {
                     job.setStarted(j.getStarted());
                     job.setEnded(j.getEnded());
                     job.setJobFootnotes(j.getJobFootnotes());
+                    job.setTechnicalEnvironment(j.getTechnicalEnvironment());
                     return jobRepo.save(job);
                 })
                 .orElseGet(() -> add(j));

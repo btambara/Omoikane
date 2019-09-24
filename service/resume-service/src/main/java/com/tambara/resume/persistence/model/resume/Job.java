@@ -53,12 +53,17 @@ public class Job extends ResourceSupport implements Serializable {
     //Purpose: Job summary
     //Data Type: String
     @NotNull
-    @Column(length=2500)
+    @Column(length = 2500)
     private String jobSummary;
 
     //Purpose: Job foot notes. This will include accomplishments and projects.
     //Data Type: Set<String>
+    @Column(length = 1500)
     private ArrayList<String> jobFootnotes;
+
+    //Purpose: The technical environment of the job.
+    //Data Type: Set<String>
+    private ArrayList<String> technicalEnvironment;
 
     public long getJid() {
         return jid;
@@ -130,5 +135,13 @@ public class Job extends ResourceSupport implements Serializable {
 
     public void setJobFootnotes(ArrayList<String> jobFootnotes) {
         this.jobFootnotes = jobFootnotes;
+    }
+
+    public ArrayList<String> getTechnicalEnvironment() {
+        return technicalEnvironment;
+    }
+
+    public void setTechnicalEnvironment(ArrayList<String> technicalEnvironment) {
+        this.technicalEnvironment = technicalEnvironment;
     }
 }

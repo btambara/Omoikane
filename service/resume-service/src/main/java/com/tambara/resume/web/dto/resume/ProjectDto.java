@@ -3,6 +3,7 @@ package com.tambara.resume.web.dto.resume;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 //Purpose: Data transfer object (DTO) for Project
@@ -26,4 +27,6 @@ public class ProjectDto {
     private String websiteLink;
 
     private String repositoryLink;
+
+    private ArrayList<String> technicalEnvironment;
 }

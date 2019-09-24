@@ -7,12 +7,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Entity
 @ToString
 public class Project extends ResourceSupport implements Serializable {
 
-    private static final long serialVersionUID = -8625380108362164487L;
+    private static final long serialVersionUID = 2087573530763336852L;
 
     //Purpose: Unique ID
     //Data Type: long
@@ -60,6 +61,10 @@ public class Project extends ResourceSupport implements Serializable {
     //Data Type: String
     @NotNull
     private String repositoryLink;
+
+    //Purpose: The technical environment of the job.
+    //Data Type: Set<String>
+    private ArrayList<String> technicalEnvironment;
 
     public long getPid() {
         return pid;
@@ -131,5 +136,13 @@ public class Project extends ResourceSupport implements Serializable {
 
     public void setRepositoryLink(String repositoryLink) {
         this.repositoryLink = repositoryLink;
+    }
+
+    public ArrayList<String> getTechnicalEnvironment() {
+        return technicalEnvironment;
+    }
+
+    public void setTechnicalEnvironment(ArrayList<String> technicalEnvironment) {
+        this.technicalEnvironment = technicalEnvironment;
     }
 }
