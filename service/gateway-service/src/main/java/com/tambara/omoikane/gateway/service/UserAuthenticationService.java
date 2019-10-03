@@ -151,7 +151,7 @@ public class UserAuthenticationService implements UserAuthenticationBaseService 
         if (user != null) {
             return user;
         } else {
-            throw new HttpErrorException("Username does not exist.", HttpStatus.CONFLICT);
+            return null;
         }
     }
 
